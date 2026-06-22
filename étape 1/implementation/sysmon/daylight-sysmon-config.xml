@@ -1,0 +1,28 @@
+<Sysmon schemaversion="4.90">
+  <HashAlgorithms>sha256</HashAlgorithms>
+  <EventFiltering>
+    <!-- Process creation : utile pour PowerShell suspect / regle 100100. -->
+    <ProcessCreate onmatch="include">
+      <Image condition="contains">powershell.exe</Image>
+      <Image condition="contains">pwsh.exe</Image>
+      <CommandLine condition="contains">-enc</CommandLine>
+      <CommandLine condition="contains">DownloadString</CommandLine>
+      <CommandLine condition="contains">Invoke-WebRequest</CommandLine>
+    </ProcessCreate>
+
+    <!-- Network connections depuis interpreteurs/scripts. -->
+    <NetworkConnect onmatch="include">
+      <Image condition="contains">powershell.exe</Image>
+      <Image condition="contains">wscript.exe</Image>
+      <Image condition="contains">cscript.exe</Image>
+      <Image condition="contains">python.exe</Image>
+    </NetworkConnect>
+
+    <!-- USB / volumes : support regle 100140. -->
+    <DriverLoad onmatch="include" />
+    <FileCreate onmatch="include">
+      <TargetFilename condition="contains">:\</TargetFilename>
+    </FileCreate>
+  </EventFiltering>
+</Sysmon>
+

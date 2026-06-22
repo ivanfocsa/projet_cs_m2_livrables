@@ -31,6 +31,8 @@ Actions :
 
 Documentation interne : [../infra/wazuh/README.md](../infra/wazuh/README.md)
 
+Snippets concrets a appliquer : [../implementation/README.md](../implementation/README.md)
+
 Automatisation disponible :
 
 ```powershell
@@ -79,6 +81,8 @@ python scripts/generate_demo_logs.py --out logs/generated --count 200
 
 Point de depart : [../detection/wazuh/local_rules.xml](../detection/wazuh/local_rules.xml)
 
+Decoders et collecte concrete : [../implementation/wazuh/](../implementation/wazuh/)
+
 Actions :
 
 1. Copier les regles dans la configuration locale Wazuh.
@@ -86,6 +90,16 @@ Actions :
 3. Generer les logs de test.
 4. Verifier les alertes.
 5. Ajuster les seuils.
+
+### Verification concrete
+
+Depuis la racine du depot :
+
+```bash
+npm run verify:concrete-stack
+```
+
+Cette commande verifie que les fichiers d'implementation, les regles `100100` a `100160`, les logs de demonstration et les scenarios attendus sont presents.
 
 ## 4. Utilisation SOC
 

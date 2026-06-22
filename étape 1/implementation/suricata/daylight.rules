@@ -1,0 +1,7 @@
+# Evolution production : regles Suricata simples pour completer pfSense/syslog.
+
+alert tcp any any -> $HOME_NET 3389 (msg:"DAYLIGHT RDP access attempt"; flow:to_server; sid:9001001; rev:1;)
+alert tcp any any -> $HOME_NET 22 (msg:"DAYLIGHT SSH access attempt"; flow:to_server; sid:9001002; rev:1;)
+alert tcp any any -> $HOME_NET [22,80,443,445,3389,8080] (msg:"DAYLIGHT possible multi-port scan"; flags:S; threshold:type threshold, track by_src, count 6, seconds 60; sid:9001003; rev:1;)
+alert http any any -> any any (msg:"DAYLIGHT possible phishing URL access"; content:"phishing-demo.invalid"; http_host; sid:9001004; rev:1;)
+

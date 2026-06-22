@@ -1,0 +1,22 @@
+<!--
+  Decoders a copier dans /var/ossec/etc/decoders/local_decoder.xml.
+  Objectif : parser les logs firewall simules et garder les champs utiles
+  pour les regles 100110 brute_force et 100160 port_scan.
+-->
+
+<decoder name="daylight-firewall">
+  <program_name>firewall</program_name>
+</decoder>
+
+<decoder name="daylight-firewall-fields">
+  <parent>daylight-firewall</parent>
+  <regex>action=(\S+) scenario=(\S+) src=(\S+) dst=(\S+) (?:port|ports)=(\S+)</regex>
+  <order>action,scenario,srcip,dstip,dstport</order>
+</decoder>
+
+<decoder name="daylight-firewall-user">
+  <parent>daylight-firewall</parent>
+  <regex>user=(\S+)</regex>
+  <order>user</order>
+</decoder>
+
