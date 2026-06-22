@@ -1,0 +1,18 @@
+flowchart TD
+    A["Evenement collecte"] --> B{"Evenement suspect ?"}
+    B -->|"Non"| C["Indexation simple / conservation"]
+    B -->|"Oui"| D["Creation alerte SIEM"]
+    D --> E["Qualification analyste SOC"]
+    E --> F{"Criticite"}
+    F -->|"Faible"| G["Surveillance et documentation"]
+    F -->|"Moyenne"| H["Investigation detaillee"]
+    F -->|"Haute"| I["Confinement / escalade"]
+    H --> J{"Incident confirme ?"}
+    I --> J
+    J -->|"Non"| K["Faux positif documente"]
+    J -->|"Oui"| L["Execution playbook"]
+    L --> M["Remediation"]
+    M --> N["Validation retour a la normale"]
+    N --> O["REX incident simule"]
+    O --> P["Amelioration regle / procedure"]
+

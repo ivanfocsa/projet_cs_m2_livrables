@@ -1,0 +1,21 @@
+sequenceDiagram
+    autonumber
+    participant Endpoint as Poste / Serveur
+    participant Firewall as Firewall / Routeur
+    participant App as Application metier
+    participant Wazuh as Wazuh Manager
+    participant Rules as Regles SIEM
+    participant Dash as Dashboard SOC
+    participant Analyst as Analyste SOC
+    participant Playbook as Playbook
+
+    Endpoint->>Wazuh: Evenements systeme et securite via agent
+    Firewall->>Wazuh: Flux reseau et alertes via syslog
+    App->>Wazuh: Logs applicatifs CRM/RDV/dossiers patients
+    Wazuh->>Rules: Normalisation et correlation
+    Rules->>Wazuh: Alerte si seuil ou pattern detecte
+    Wazuh->>Dash: Indexation et affichage
+    Analyst->>Dash: Analyse de l'alerte
+    Analyst->>Playbook: Application de la procedure
+    Playbook-->>Analyst: Actions de confinement, qualification, escalade
+

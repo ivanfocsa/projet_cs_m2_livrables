@@ -1,0 +1,51 @@
+flowchart LR
+    classDef soc fill:#e7f0ff,stroke:#2b5fab,color:#111827
+    classDef site fill:#f7f7f7,stroke:#8a8a8a,color:#111827
+    classDef vm fill:#ffffff,stroke:#555,color:#111827
+
+    INTERNET["Reseau / Internet simule"]:::site
+
+    subgraph SOC["Zone SOC centralisee"]
+        SOCVM["VM SOC-01<br/>Wazuh Manager<br/>Dashboard<br/>OpenSearch"]:::soc
+    end
+
+    subgraph S1["Site 1 - Centre principal"]
+        S1FW["FW-S1<br/>Firewall / routeur"]:::vm
+        S1PC["PC-S1<br/>Poste audioprothesiste"]:::vm
+        S1SRV["SRV-S1<br/>Serveur fichiers / AD simule"]:::vm
+        S1APP["APP-S1<br/>CRM/RDV/dossiers patients simules"]:::vm
+    end
+
+    subgraph S2["Site 2 - Centre secondaire"]
+        S2FW["FW-S2<br/>Firewall / routeur"]:::vm
+        S2PC["PC-S2<br/>Poste utilisateur"]:::vm
+        S2MAIL["MAIL-S2<br/>Messagerie simulee"]:::vm
+    end
+
+    subgraph S3["Site 3 - Centre distant"]
+        S3PC["PC-S3<br/>Poste utilisateur"]:::vm
+        S3APP["APP-S3<br/>Logs applicatifs"]:::vm
+    end
+
+    INTERNET --- SOCVM
+    INTERNET --- S1FW
+    INTERNET --- S2FW
+    INTERNET --- S3PC
+
+    S1FW --- S1PC
+    S1FW --- S1SRV
+    S1FW --- S1APP
+    S2FW --- S2PC
+    S2FW --- S2MAIL
+    S3PC --- S3APP
+
+    S1PC -->|"Agent"| SOCVM
+    S1SRV -->|"Agent"| SOCVM
+    S1APP -->|"Logs applicatifs"| SOCVM
+    S1FW -->|"Syslog"| SOCVM
+    S2PC -->|"Agent"| SOCVM
+    S2MAIL -->|"Logs mail"| SOCVM
+    S2FW -->|"Syslog"| SOCVM
+    S3PC -->|"Agent"| SOCVM
+    S3APP -->|"Logs applicatifs"| SOCVM
+

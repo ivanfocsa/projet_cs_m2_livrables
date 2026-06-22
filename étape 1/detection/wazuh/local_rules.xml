@@ -1,0 +1,40 @@
+<group name="soc_audiopro,">
+  <!-- Template pedagogique : adapter les champs selon les logs reellement parses par Wazuh. -->
+
+  <rule id="100100" level="10">
+    <field name="scenario">brute_force</field>
+    <description>SOC AUDIO - Suspicion brute force sur compte utilisateur</description>
+    <group>authentication,bruteforce,soc_audio,</group>
+  </rule>
+
+  <rule id="100110" level="9">
+    <field name="scenario">suspicious_process</field>
+    <description>SOC AUDIO - Execution suspecte sur endpoint</description>
+    <group>endpoint,malware,soc_audio,</group>
+  </rule>
+
+  <rule id="100120" level="7">
+    <field name="scenario">usb_suspect</field>
+    <description>SOC AUDIO - Connexion USB suspecte</description>
+    <group>endpoint,usb,soc_audio,</group>
+  </rule>
+
+  <rule id="100130" level="11">
+    <field name="scenario">patient_access_anomaly</field>
+    <description>SOC AUDIO - Acces anormal a un dossier patient</description>
+    <group>application,privacy,soc_audio,</group>
+  </rule>
+
+  <rule id="100140" level="10">
+    <field name="scenario">phishing</field>
+    <description>SOC AUDIO - Suspicion phishing messagerie</description>
+    <group>mail,phishing,soc_audio,</group>
+  </rule>
+
+  <rule id="100150" level="8">
+    <field name="scenario">port_scan</field>
+    <description>SOC AUDIO - Suspicion scan reseau</description>
+    <group>network,firewall,reconnaissance,soc_audio,</group>
+  </rule>
+</group>
+

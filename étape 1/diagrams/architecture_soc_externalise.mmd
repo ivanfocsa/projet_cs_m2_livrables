@@ -1,0 +1,57 @@
+flowchart TB
+    classDef soc fill:#e7f0ff,stroke:#2b5fab,stroke-width:1px,color:#111827
+    classDef site fill:#f7f7f7,stroke:#8a8a8a,stroke-width:1px,color:#111827
+    classDef security fill:#fff3d8,stroke:#b7791f,stroke-width:1px,color:#111827
+    classDef actor fill:#e9f8ef,stroke:#2f855a,stroke-width:1px,color:#111827
+
+    subgraph SOC["SOC externalise - Prestataire"]
+        WAZUH["Wazuh Manager / SIEM"]:::soc
+        INDEX["OpenSearch / Indexation"]:::soc
+        DASH["Wazuh Dashboard"]:::soc
+        RULES["Regles de detection"]:::security
+        ALERTS["Alertes et reporting"]:::security
+        PLAYBOOKS["Playbooks de reponse"]:::security
+    end
+
+    subgraph SITE1["Site 1 - Centre principal"]
+        PC1["Poste audioprothesiste"]:::site
+        SRV1["Serveur fichiers / AD simule"]:::site
+        APP1["Application metier CRM/RDV"]:::site
+        FW1["Firewall / routeur"]:::site
+    end
+
+    subgraph SITE2["Site 2 - Centre secondaire"]
+        PC2["Poste utilisateur"]:::site
+        FW2["Firewall / routeur"]:::site
+        MAIL2["Messagerie simulee"]:::site
+    end
+
+    subgraph SITE3["Site 3 - Centre distant"]
+        PC3["Poste utilisateur"]:::site
+        APP3["Logs applicatifs simules"]:::site
+    end
+
+    ANALYST["Analyste SOC"]:::actor
+    ADMIN["Administrateur"]:::actor
+    CLIENT["Client / Direction"]:::actor
+
+    PC1 -->|"Agent Wazuh"| WAZUH
+    SRV1 -->|"Agent Wazuh"| WAZUH
+    APP1 -->|"Fichiers logs / JSON"| WAZUH
+    FW1 -->|"Syslog"| WAZUH
+    PC2 -->|"Agent Wazuh"| WAZUH
+    FW2 -->|"Syslog"| WAZUH
+    MAIL2 -->|"Logs messagerie"| WAZUH
+    PC3 -->|"Agent Wazuh"| WAZUH
+    APP3 -->|"Logs applicatifs"| WAZUH
+
+    WAZUH --> INDEX
+    WAZUH --> RULES
+    RULES --> ALERTS
+    INDEX --> DASH
+    DASH --> ANALYST
+    ALERTS --> ANALYST
+    ANALYST --> PLAYBOOKS
+    ADMIN --> DASH
+    CLIENT --> ALERTS
+

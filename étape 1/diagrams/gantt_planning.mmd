@@ -1,0 +1,27 @@
+gantt
+    title Planning previsionnel - Projet SOC externalise
+    dateFormat  YYYY-MM-DD
+    axisFormat  %d/%m
+
+    section Cadrage
+    Analyse besoin et perimetre MVP          :done, cadrage1, 2026-06-18, 5d
+    Architecture et backlog                  :active, cadrage2, after cadrage1, 5d
+
+    section Socle technique
+    Installation Wazuh                       :tech1, after cadrage2, 7d
+    Connexion premier agent                  :tech2, after tech1, 4d
+    Collecte syslog et logs applicatifs      :tech3, after tech2, 7d
+
+    section Detection
+    Regles brute force et execution suspecte :det1, after tech3, 6d
+    Dashboards supervision et analyste       :det2, after det1, 6d
+    Tests scenarios SOC                      :det3, after det2, 6d
+
+    section Reponse incident
+    Playbooks et procedures                  :pb1, after det1, 8d
+    Scripts et remediation                   :pb2, after pb1, 5d
+
+    section Livrables
+    Rapport technique et guides              :liv1, after det3, 8d
+    Video demonstration MVP                  :liv2, after liv1, 5d
+
