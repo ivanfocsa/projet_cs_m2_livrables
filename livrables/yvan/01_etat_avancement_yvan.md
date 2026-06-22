@@ -11,7 +11,7 @@
 | Couts | Couts MVP, couts de production et leviers de standardisation | Solide |
 | Documentation | Rapport individuel, contribution architecture, matrice de conformite | Solide |
 | Video | Script Yvan final, plan de passage et supports disponibles | A enregistrer |
-| Preuves | Captures dashboard de demonstrateur disponibles | A remplacer par Wazuh live si possible |
+| Preuves | Captures Wazuh live disponibles | Dossier `livrables/preuves/wazuh-live-captures/` |
 
 ## Ce qui manquait et a ete ajoute
 

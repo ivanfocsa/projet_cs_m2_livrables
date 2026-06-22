@@ -5,12 +5,18 @@
 -->
 
 <decoder name="daylight-firewall">
-  <program_name>firewall</program_name>
+  <prematch>firewall action=</prematch>
 </decoder>
 
-<decoder name="daylight-firewall-fields">
+<decoder name="daylight-firewall-port">
   <parent>daylight-firewall</parent>
-  <regex>action=(\S+) scenario=(\S+) src=(\S+) dst=(\S+) (?:port|ports)=(\S+)</regex>
+  <regex>(\S+) scenario=(\S+) src=(\S+) dst=(\S+) port=(\S+)</regex>
+  <order>action,scenario,srcip,dstip,dstport</order>
+</decoder>
+
+<decoder name="daylight-firewall-ports">
+  <parent>daylight-firewall</parent>
+  <regex>(\S+) scenario=(\S+) src=(\S+) dst=(\S+) ports=(\S+)</regex>
   <order>action,scenario,srcip,dstip,dstport</order>
 </decoder>
 
@@ -19,4 +25,3 @@
   <regex>user=(\S+)</regex>
   <order>user</order>
 </decoder>
-

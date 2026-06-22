@@ -1,0 +1,6 @@
+# docker ps - Wazuh live 4.14.5
+Mon Jun 22 23:04:44 CEST 2026
+NAMES                           IMAGE                          STATUS          PORTS
+single-node-wazuh.dashboard-1   wazuh/wazuh-dashboard:4.14.5   Up 15 minutes   443/tcp, 0.0.0.0:443->5601/tcp, [::]:443->5601/tcp
+single-node-wazuh.manager-1     wazuh/wazuh-manager:4.14.5     Up 15 minutes   0.0.0.0:1514-1515->1514-1515/tcp, [::]:1514-1515->1514-1515/tcp, 0.0.0.0:514->514/udp, [::]:514->514/udp, 0.0.0.0:55000->55000/tcp, [::]:55000->55000/tcp, 1516/tcp
+single-node-wazuh.indexer-1     wazuh/wazuh-indexer:4.14.5     Up 15 minutes   0.0.0.0:9200->9200/tcp, [::]:9200->9200/tcp

@@ -327,7 +327,7 @@ Un nouveau site doit etre integre selon la sequence suivante :
 | Limite | Impact | Suite prevue |
 |---|---|---|
 | Logs rejoues et non production | Le MVP prouve la chaine SOC mais pas encore un deploiement reel complet | Installer des agents sur VMs. |
-| Captures dashboard de demonstrateur | Elles prouvent la lecture SOC mais peuvent etre remplacees par du Wazuh live | Garder les memes noms de fichiers. |
+| Captures Wazuh live | Elles prouvent la lecture SOC dans la vraie interface Wazuh apres injection des logs Daylight | `livrables/preuves/wazuh-live-captures/`. |
 | Messagerie encore simulee | Le phishing est couvert par logs dedies mais pas par integration mail reelle | Ajouter une integration mail en production. |
 | Pas de haute disponibilite | Suffisant pour MVP, insuffisant production | Proposer architecture HA. |
 | Pas encore de SOAR | Reponse semi-automatisee limitee | Evaluer Shuffle ou TheHive. |

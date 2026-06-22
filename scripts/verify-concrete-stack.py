@@ -97,6 +97,11 @@ def main() -> None:
     decoders = (ROOT / "étape 1/implementation/wazuh/local_decoders_daylight.xml").read_text(encoding="utf-8")
     if not re.search(r"<decoder name=\"daylight-firewall", decoders):
         fail("Decoder firewall Daylight absent")
+    if "(?:" in decoders:
+        fail("Decoder Wazuh incompatible: groupe regex non capturant '(?:...)' detecte")
+    for expected in ["<prematch>firewall action=</prematch>", "port=(\\S+)", "ports=(\\S+)"]:
+        if expected not in decoders:
+            fail(f"Decoder firewall incomplet: {expected}")
 
     print("[OK] Implementation concrete verifiee")
     print("[OK] Regles:", ", ".join(EXPECTED_RULES.keys()))

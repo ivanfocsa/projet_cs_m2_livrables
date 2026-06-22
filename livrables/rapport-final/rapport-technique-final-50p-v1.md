@@ -12,7 +12,7 @@ Prestataire de demonstration : CT - Cyber Threat, SOC externalise fictif.
 
 Ce rapport presente la conception, la mise en place et l'industrialisation d'un SOC externalise. Il couvre le cadrage du besoin, l'architecture cible, le choix de Wazuh, la strategie de collecte, les regles de detection, les dashboards, les playbooks de reponse incident, les tests realises, les couts, les limites et les perspectives.
 
-Cette version consolidee regroupe le rapport, les preuves de logs, les regles de detection, les captures dashboard de demonstrateur et les annexes utiles pour la soutenance. Les captures sont generees a partir des logs Daylight du MVP et peuvent etre remplacees par des captures Wazuh live si la plateforme est accessible au moment de la demonstration.
+Cette version consolidee regroupe le rapport, les preuves de logs, les regles de detection, les captures dashboard et les annexes utiles pour la soutenance. Les preuves prioritaires sont les captures Wazuh live du dossier `livrables/preuves/wazuh-live-captures/`, generees apres lancement de la stack Wazuh 4.14.5 et injection des logs Daylight du MVP.
 
 <!-- pagebreak -->
 
@@ -863,7 +863,7 @@ La securite de la plateforme doit etre documentee dans le guide d'exploitation. 
 Limites actuelles :
 
 - logs simules ou rejoues ;
-- captures dashboard issues du demonstrateur et remplacables par des captures Wazuh live ;
+- captures Wazuh live disponibles, dont Data Explorer, Threat Hunting et l'alerte firewall/syslog `100160` ;
 - pas de deploiement reel sur 30 sites ;
 - pas de haute disponibilite ;
 - messagerie encore partiellement simulee ;

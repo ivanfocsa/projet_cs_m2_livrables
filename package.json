@@ -7,9 +7,7 @@
     "generate:logs": "python3 \"étape 1/scripts/generate_demo_logs.py\" --out \"étape 1/logs/generated\" --count 200 --seed 42",
     "prepare:preuves": "node scripts/run-python-with-pillow.mjs scripts/prepare-final-deliverables.py",
     "generate:pdf": "node scripts/generate-rapports-v1.mjs",
-    "verify:concrete-stack": "python3 scripts/verify-concrete-stack.py",
-    "build:local-dashboard": "node scripts/build-local-dashboard.mjs",
-    "capture:local-dashboard": "node scripts/capture-local-dashboard.mjs"
+    "verify:concrete-stack": "python3 scripts/verify-concrete-stack.py"
   },
   "dependencies": {
     "pdfkit": "^0.15.2"

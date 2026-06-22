@@ -22,7 +22,7 @@ Objectif : suivre la consolidation du rendu final avec preuves, captures, video 
 | Contexte client | Redige | Ajouter le code promotion si necessaire |
 | Problematique | Redige | Valider avec equipe |
 | Architecture | Redige | Afficher le schema pendant la video |
-| Implementation MVP | Redige avec preuves | Remplacer par captures Wazuh live si possible |
+| Implementation MVP | Redige avec preuves | Captures Wazuh live ajoutees |
 | Regles detection | Redige | Extrait XML disponible en preuves |
 | Alertes obtenues | Redige | Captures principales disponibles |
 | Playbooks | Redige | Chemins harmonises |

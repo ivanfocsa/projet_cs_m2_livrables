@@ -24,18 +24,18 @@ Les incidents montrent que le SOC ne doit pas seulement collecter des logs. Il d
 
 - Les scenarios couvrent les briques principales du cahier des charges : poste, firewall, application metier, serveur/AD et messagerie.
 - Les IDs d'alertes sont harmonises entre regles, rapport, preuves et script video.
-- Les captures dashboard de demonstrateur permettent de derouler la video meme si l'environnement live est instable.
+- Les captures Wazuh live permettent de derouler la video avec une vraie interface SIEM.
 - Les playbooks donnent une procedure exploitable pour chaque type d'incident.
 
 ## Limites
 
 - Les logs sont simules ou rejoues, ce qui stabilise la demo mais ne remplace pas une production reelle.
-- Les captures generees depuis les logs doivent idealement etre remplacees par des captures Wazuh live si la plateforme est disponible.
+- Les captures generees restent une solution de secours, mais les captures Wazuh live sont maintenant disponibles.
 - Le dimensionnement production, la haute disponibilite et le SOAR restent des perspectives.
 
 ## Ameliorations proposees
 
-1. Ajouter des captures Wazuh live en conservant les noms de fichiers du dossier `livrables/preuves/sprint-01/captures-dashboard/`.
+1. Utiliser en priorite les captures Wazuh live du dossier `livrables/preuves/wazuh-live-captures/`.
 2. Ajouter un decoder Wazuh plus strict pour chaque famille de logs.
 3. Ajouter TheHive ou Shuffle pour tracer les tickets et semi-automatiser certaines reponses.
 4. Mettre en place un reporting mensuel par site et par criticite.
