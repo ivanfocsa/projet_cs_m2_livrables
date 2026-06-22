@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SOC Daylight - Dashboard local</title>
+  <style>
+    *{box-sizing:border-box} body{margin:0;background:#f5f7fb;color:#172033;font-family:Inter,Arial,sans-serif}
+    .shell{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+    aside{background:#101828;color:#fff;padding:24px 18px;position:sticky;top:0;height:100vh}
+    .brand{font-size:21px;font-weight:800;margin-bottom:4px}.muted{color:#98a2b3;font-size:13px}
+    nav{display:grid;gap:8px;margin-top:28px} nav a{color:#d0d5dd;text-decoration:none;padding:10px 12px;border-radius:7px} nav a:hover,nav a.active{background:#1d2939;color:#fff}
+    main{padding:24px 30px 38px}.top{display:flex;justify-content:space-between;gap:18px;align-items:flex-start;margin-bottom:22px}
+    h1{font-size:28px;margin:0 0 6px}.subtitle{font-size:14px;color:#667085}
+    .grid{display:grid;gap:14px}.kpis{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:16px}
+    .panel{background:#fff;border:1px solid #d9e1ec;border-radius:8px;padding:17px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+    .kpi b{display:block;font-size:30px;margin-top:8px}.kpi span,.panel h2 span,td span{display:block;color:#667085;font-size:12px;font-weight:500;margin-top:3px}
+    .content{grid-template-columns:1.45fr .85fr;align-items:start}.section{margin-top:16px}
+    h2{font-size:18px;margin:0 0 12px}.table-wrap{overflow:auto;border:1px solid #e4e7ec;border-radius:8px}
+    table{border-collapse:collapse;width:100%;font-size:13px;background:#fff} th,td{text-align:left;border-bottom:1px solid #eaecf0;padding:10px 11px;vertical-align:top} th{background:#f2f4f7;color:#475467;font-size:12px} tr:last-child td{border-bottom:0}
+    .pill{display:inline-block;background:#ecfdf3;color:#027a48;border:1px solid #abefc6;padding:4px 8px;border-radius:999px;font-size:12px}
+    .bar-row{display:grid;grid-template-columns:120px 1fr 28px;align-items:center;gap:10px;margin:10px 0;font-size:13px}.bar-row div{height:9px;background:#edf2f7;border-radius:999px;overflow:hidden}.bar-row i{display:block;height:100%;background:#2457d6}
+    .detail{white-space:pre-wrap;background:#0f172a;color:#d1e0ff;border-radius:8px;padding:13px;font-size:12px;min-height:150px;overflow:auto}
+    .footer{margin-top:20px;color:#667085;font-size:12px}
+    @media(max-width:980px){.shell{grid-template-columns:1fr}aside{height:auto;position:relative}.kpis,.content{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="shell">
+  <aside>
+    <div class="brand">SOC Daylight</div>
+    <div class="muted">Dashboard local de demonstration</div>
+    <nav>
+      <a class="active" href="#overview">Vue globale</a>
+      <a href="#alerts">Alertes</a>
+      <a href="#sources">Sources</a>
+      <a href="#implementation">Implementation</a>
+    </nav>
+    <p class="muted" style="margin-top:30px">MVP local base sur les logs generes du depot. Docker/Wazuh live non disponible sur cette machine.</p>
+  </aside>
+  <main>
+    <div class="top" id="overview">
+      <div>
+        <h1>Supervision SOC externalise</h1>
+        <div class="subtitle">3 sites MVP, 7 alertes Daylight, modele industrialisable vers 30 centres</div>
+      </div>
+      <div class="subtitle">Genere le 22/06/2026 22:40:40</div>
+    </div>
+    <section class="grid kpis">
+      <div class="panel kpi">Evenements traites<b>1000</b><span>endpoint, app, AD, mail, firewall</span></div>
+      <div class="panel kpi">Alertes SOC<b>7</b><span>regles 100100 a 100160</span></div>
+      <div class="panel kpi">Sites MVP<b>3</b><span>SITE-01, SITE-02, SITE-03</span></div>
+      <div class="panel kpi">Sources<b>5</b><span>multi-source valide</span></div>
+    </section>
+    <section class="grid content">
+      <div class="panel" id="alerts">
+        <h2>Alertes detectees <span>IDs harmonises avec regles, rapport et video</span></h2>
+        <div class="table-wrap"><table><thead><tr><th>ID</th><th>Alerte</th><th>Source</th><th>Site/host</th><th>User/src</th><th>Message</th></tr></thead><tbody>
+  <tr data-rule="100100" data-source="Endpoint">
+    <td><strong>100100</strong><span>Niveau 10</span></td>
+    <td>Execution PowerShell suspecte<span>T1059.001</span></td>
+    <td>Endpoint<span>suspicious_process</span></td>
+    <td>SITE-02<span>PC-S02-AUDIO-01</span></td>
+    <td>c.bernard<span>-</span></td>
+    <td>Suspicious command execution</td>
+  </tr>
+  <tr data-rule="100110" data-source="Firewall/syslog">
+    <td><strong>100110</strong><span>Niveau 12</span></td>
+    <td>Brute force acces distant<span>T1110</span></td>
+    <td>Firewall/syslog<span>brute_force</span></td>
+    <td>SITE-01<span>FW-S01</span></td>
+    <td>y.guerniou<span>198.51.100.181</span></td>
+    <td>Repeated remote access failures</td>
+  </tr>
+  <tr data-rule="100120" data-source="Application metier">
+    <td><strong>100120</strong><span>Niveau 10</span></td>
+    <td>Acces anormal aux dossiers patients<span>T1530</span></td>
+    <td>Application metier<span>patient_access_anomaly</span></td>
+    <td>SITE-03<span>APP-S03-LOGS</span></td>
+    <td>c.bernard<span>-</span></td>
+    <td>Abnormal patient record access volume</td>
+  </tr>
+  <tr data-rule="100130" data-source="Active Directory">
+    <td><strong>100130</strong><span>Niveau 14</span></td>
+    <td>Modification groupe privilegie<span>T1098</span></td>
+    <td>Active Directory<span>privileged_group_change</span></td>
+    <td>SITE-01<span>AD-S01</span></td>
+    <td>m.diacoumba<span>-</span></td>
+    <td>Privileged group membership modified</td>
+  </tr>
+  <tr data-rule="100140" data-source="Endpoint">
+    <td><strong>100140</strong><span>Niveau 7</span></td>
+    <td>Usage USB detecte<span>T1091</span></td>
+    <td>Endpoint<span>usb_suspect</span></td>
+    <td>SITE-01<span>SRV-S01-FICHIERS</span></td>
+    <td>y.guerniou<span>-</span></td>
+    <td>Unauthorized USB device connected</td>
+  </tr>
+  <tr data-rule="100150" data-source="Messagerie">
+    <td><strong>100150</strong><span>Niveau 10</span></td>
+    <td>Suspicion phishing messagerie<span>T1566</span></td>
+    <td>Messagerie<span>phishing</span></td>
+    <td>SITE-02<span>MAIL-S02</span></td>
+    <td>m.diacoumba<span>-</span></td>
+    <td>Suspicious phishing email detected</td>
+  </tr>
+  <tr data-rule="100160" data-source="Firewall/syslog">
+    <td><strong>100160</strong><span>Niveau 8</span></td>
+    <td>Suspicion scan reseau<span>T1046</span></td>
+    <td>Firewall/syslog<span>port_scan</span></td>
+    <td>SITE-01<span>FW-S01</span></td>
+    <td>-<span>198.51.100.107</span></td>
+    <td>Port scan suspected</td>
+  </tr></tbody></table></div>
+      </div>
+      <div class="grid">
+        <div class="panel" id="sources">
+          <h2>Couverture sources</h2>
+          
+  <div class="bar-row"><span>Endpoint</span><div><i style="width:28%"></i></div><b>2</b></div>
+  <div class="bar-row"><span>Firewall/syslog</span><div><i style="width:28%"></i></div><b>2</b></div>
+  <div class="bar-row"><span>Application metier</span><div><i style="width:14%"></i></div><b>1</b></div>
+  <div class="bar-row"><span>Active Directory</span><div><i style="width:14%"></i></div><b>1</b></div>
+  <div class="bar-row"><span>Messagerie</span><div><i style="width:14%"></i></div><b>1</b></div>
+        </div>
+        <div class="panel">
+          <h2>Detail brut</h2>
+          <div class="detail">100100 Execution PowerShell suspecte\n{"timestamp":"2026-06-22T18:38:01.938542Z","site":"SITE-02","hostname":"PC-S02-AUDIO-01","user":"c.bernard","scenario":"suspicious_process","project":"soc-audiopro","environment":"mvp","source":"endpoint","action":"process_start","process":"unknown_tool.exe","command_line":"powershell -enc <demo_payload>","severity":"high","message":"Suspicious command execution"}\n\n100110 Brute force acces distant\nJun 22 18:37:56 FW-S01 firewall action=deny scenario=brute_force src=198.51.100.181 dst=10.10.1.50 port=3389 user=y.guerniou attempts=12 message="Repeated remote access failures"\n\n100120 Acces anormal aux dossiers patients\n{"timestamp":"2026-06-22T18:38:03.938542Z","site":"SITE-03","hostname":"APP-S03-LOGS","user":"c.bernard","scenario":"patient_access_anomaly","project":"soc-audiopro","environment":"mvp","source":"application","application":"crm","action":"patient_record_read","patient_record":"PATIENT-DEMO-70981","access_count":38,"severity":"high","message":"Abnormal patient record access volume"}\n\n100130 Modification groupe privilegie\n{"timestamp":"2026-06-22T18:38:16.938542Z","site":"SITE-01","hostname":"AD-S01","user":"m.diacoumba","scenario":"privileged_group_change","project":"soc-audiopro","environment":"mvp","source":"active_directory","action":"group_membership_changed","target_group":"Domain Admins","added_user":"y.guerniou","actor":"y.focsa","severity":"critical","message":"Privileged group membership modified"}\n\n100140 Usage USB detecte\n{"timestamp":"2026-06-22T18:37:46.938542Z","site":"SITE-01","hostname":"SRV-S01-FICHIERS","user":"y.guerniou","scenario":"usb_suspect","project":"soc-audiopro","environment":"mvp","source":"endpoint","action":"usb_connected","device_id":"USB-DEMO-4657","severity":"medium","message":"Unauthorized USB device connected"}\n\n100150 Suspicion phishing messagerie\n{"timestamp":"2026-06-22T18:40:20.938542Z","site":"SITE-02","hostname":"MAIL-S02","user":"m.diacoumba","scenario":"phishing","project":"soc-audiopro","environment":"mvp","source":"mail","sender":"support-update.example","recipient":"m.diacoumba@audio-demo.local","subject":"Facture urgente","url":"https://phishing-demo.invalid/login","attachment":"none","severity":"high","message":"Suspicious phishing email detected"}\n\n100160 Suspicion scan reseau\nJun 22 18:38:04 FW-S01 firewall action=deny scenario=port_scan src=198.51.100.107 dst=10.10.1.60 ports=22,445,443,3389 message="Port scan suspected"</div>
+        </div>
+      </div>
+    </section>
+    <section class="panel section" id="implementation">
+      <h2>Implementation concrete testee localement</h2>
+      <div class="table-wrap"><table><thead><tr><th>Brique</th><th>Solution</th><th>Statut</th></tr></thead><tbody>
+  <tr><td>SIEM</td><td>Wazuh Manager + Indexer/OpenSearch + Dashboard</td><td><span class="pill">Pret</span></td></tr>
+  <tr><td>Firewall</td><td>pfSense CE cible, FW-S01/FW-S02 en syslog</td><td><span class="pill">Pret</span></td></tr>
+  <tr><td>Endpoint</td><td>Agents Wazuh, Sysmon en production</td><td><span class="pill">Pret</span></td></tr>
+  <tr><td>Applications</td><td>APP-S01-CRM en logs JSONL</td><td><span class="pill">Pret</span></td></tr>
+  <tr><td>Messagerie</td><td>MAIL-S02 en logs JSONL</td><td><span class="pill">Pret</span></td></tr>
+  <tr><td>RBAC</td><td>analyste/supervision avec soc_readonly</td><td><span class="pill">Pret</span></td></tr>
+  <tr><td>Retention</td><td>Politique OpenSearch 90 jours</td><td><span class="pill">Documente</span></td></tr></tbody></table></div>
+      <div class="footer">Commande de verification : npm run verify:concrete-stack</div>
+    </section>
+  </main>
+</div>
+</body>
+</html>
