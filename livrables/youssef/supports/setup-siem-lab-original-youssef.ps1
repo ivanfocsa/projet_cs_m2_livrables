@@ -1,19 +1,17 @@
 # =====================================================================
 #  setup-siem-lab.ps1  --  Perimetre Ingenieur SIEM (Youssef GUERNIOU)
 # ---------------------------------------------------------------------
-#  Integre le travail SIEM de Youssef dans le depot projet et reproduit
-#  en UNE commande la partie Wazuh du lab SOC :
+#  Reproduit en UNE commande la partie SIEM du lab SOC :
 #    1. serveur-01  : conteneur Linux + agent Wazuh + SSH/rsyslog
 #                     + fix auth.log + test brute force (alerte 5712)
 #    2. RBAC        : utilisateurs supervision / analyste + role
 #                     lecture seule "soc_readonly" + mapping
-#    3. (optionnel) : logs Daylight via les scripts npm disponibles
+#    3. (optionnel) : source applicative Daylight via les scripts npm
 #
 #  PREREQUIS : Docker Desktop lance + lab Wazuh demarre
-#              (stack Wazuh single-node active). A lancer depuis la racine
-#              du projet. Les comptes ci-dessous sont reserves au lab.
+#              (npm run lab:start). A lancer depuis la racine du projet.
 #
-#  USAGE :     powershell -ExecutionPolicy Bypass -File .\scripts\setup-siem-lab.ps1
+#  USAGE :     .\scripts\setup-siem-lab.ps1
 # =====================================================================
 
 $ErrorActionPreference = "Stop"
@@ -21,37 +19,6 @@ $serverContainer  = "serveur-01"
 $indexerContainer = "single-node-wazuh.indexer-1"
 
 function Write-Step($msg) { Write-Host "`n=== $msg ===" -ForegroundColor Cyan }
-function Write-Skip($msg) { Write-Host "[SKIP] $msg" -ForegroundColor Yellow }
-
-function Test-NpmScript($scriptName) {
-    if (-not (Test-Path ".\package.json")) { return $false }
-
-    try {
-        $pkg = Get-Content ".\package.json" -Raw | ConvertFrom-Json
-        return ($pkg.scripts.PSObject.Properties.Name -contains $scriptName)
-    } catch {
-        return $false
-    }
-}
-
-function Invoke-NpmScriptIfPresent($scriptName) {
-    if (-not (Test-NpmScript $scriptName)) {
-        Write-Skip "npm script absent : $scriptName"
-        return $false
-    }
-
-    if (-not (Get-Command npm -ErrorAction SilentlyContinue)) {
-        Write-Skip "npm introuvable : $scriptName non execute"
-        return $false
-    }
-
-    Write-Host "[*] npm run $scriptName" -ForegroundColor Green
-    npm run $scriptName
-    if ($LASTEXITCODE -ne 0) {
-        throw "npm run $scriptName a echoue"
-    }
-    return $true
-}
 
 # ---------------------------------------------------------------------
 # 0. Verification Docker
@@ -73,7 +40,7 @@ if ($exists) {
     docker start $serverContainer | Out-Null
 } else {
     Write-Host "[*] Creation du conteneur $serverContainer (Ubuntu 22.04)..." -ForegroundColor Green
-    docker run --platform linux/amd64 -d --name $serverContainer --hostname $serverContainer ubuntu:22.04 sleep infinity | Out-Null
+    docker run -d --name $serverContainer --hostname $serverContainer ubuntu:22.04 sleep infinity | Out-Null
 }
 
 $serverBash = @'
@@ -86,9 +53,6 @@ NAME="serveur-01"
 echo "[*] Mise a jour des paquets..."
 apt-get update -qq
 
-echo "[*] Installation des prerequis de telechargement..."
-DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ca-certificates wget gnupg lsb-release
-
 echo "[*] Telechargement de l'agent Wazuh ${AGENT_VERSION}..."
 cd /tmp
 wget -q "https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/${DEB}"
@@ -96,7 +60,7 @@ wget -q "https://packages.wazuh.com/4.x/apt/pool/main/w/wazuh-agent/${DEB}"
 echo "[*] Installation de l'agent (manager=${MANAGER})..."
 WAZUH_MANAGER="$MANAGER" WAZUH_AGENT_NAME="$NAME" dpkg -i "./${DEB}" || true
 
-echo "[*] Resolution des dependances..."
+echo "[*] Resolution des dependances (python3, lsb-release)..."
 apt-get -y -qq --fix-broken install
 WAZUH_MANAGER="$MANAGER" WAZUH_AGENT_NAME="$NAME" dpkg --configure -a || true
 
@@ -105,22 +69,15 @@ DEBIAN_FRONTEND=noninteractive apt-get install -y -qq openssh-server openssh-cli
 mkdir -p /run/sshd
 
 echo "[*] Ajout du suivi de /var/log/auth.log (si absent)..."
-CONF="/var/ossec/etc/ossec.conf"
-if ! grep -q "/var/log/auth.log" "$CONF"; then
-  cp "$CONF" "${CONF}.bak.$(date +%s)"
-  tmpconf="$(mktemp)"
-  awk '
-    /<\/ossec_config>/ && !done {
-      print "  <localfile>";
-      print "    <log_format>syslog</log_format>";
-      print "    <location>/var/log/auth.log</location>";
-      print "  </localfile>";
-      done=1
-    }
-    { print }
-  ' "$CONF" > "$tmpconf"
-  cat "$tmpconf" > "$CONF"
-  rm -f "$tmpconf"
+if ! grep -q "/var/log/auth.log" /var/ossec/etc/ossec.conf; then
+cat >> /var/ossec/etc/ossec.conf <<'CONF'
+<ossec_config>
+  <localfile>
+    <log_format>syslog</log_format>
+    <location>/var/log/auth.log</location>
+  </localfile>
+</ossec_config>
+CONF
   echo "    -> directive ajoutee."
 else
   echo "    -> deja present."
@@ -150,12 +107,6 @@ docker exec $serverContainer bash /tmp/setup-serveur-01.sh
 # 2. RBAC  (vues supervision / analyste / admin)
 # ---------------------------------------------------------------------
 Write-Step "2/3  RBAC : utilisateurs + role lecture seule"
-
-$indexerRunning = docker ps --format '{{.Names}}' | Select-String -Pattern "^$indexerContainer$"
-if (-not $indexerRunning) {
-    Write-Host "[X] Conteneur $indexerContainer introuvable ou arrete. Demarre d'abord la stack Wazuh single-node." -ForegroundColor Red
-    exit 1
-}
 
 $rbacBash = @'
 #!/usr/bin/env bash
@@ -197,18 +148,13 @@ docker exec $indexerContainer bash /tmp/setup-rbac.sh
 Write-Step "3/3  Source applicative Daylight (optionnel)"
 if (Test-Path ".\package.json") {
     try {
-        Invoke-NpmScriptIfPresent "generate:logs" | Out-Null
-        Invoke-NpmScriptIfPresent "prepare:preuves" | Out-Null
-
-        $deployed = Invoke-NpmScriptIfPresent "lab:deploy-daylight"
-        if ($deployed) {
-            Start-Sleep -Seconds 45
-        }
-        Invoke-NpmScriptIfPresent "lab:replay-daylight" | Out-Null
-
-        Write-Host "[OK] Etape Daylight terminee selon les scripts disponibles dans ce depot." -ForegroundColor Green
+        npm run generate:logs
+        npm run lab:deploy-daylight
+        Start-Sleep -Seconds 45
+        npm run lab:replay-daylight
+        Write-Host "[OK] Logs Daylight integres (alertes 100100-100140)." -ForegroundColor Green
     } catch {
-        Write-Host "[!] Etape Daylight non bloquante : $($_.Exception.Message)" -ForegroundColor Yellow
+        Write-Host "[!] Etape Daylight ignoree (a lancer manuellement : npm run generate:logs / lab:deploy-daylight / lab:replay-daylight)." -ForegroundColor Yellow
     }
 } else {
     Write-Host "[!] package.json introuvable : lance ce script depuis la racine du projet pour l'etape Daylight." -ForegroundColor Yellow
@@ -218,4 +164,4 @@ if (Test-Path ".\package.json") {
 Write-Host "`n=== TERMINE ===" -ForegroundColor Cyan
 Write-Host "Dashboard : https://localhost   (admin / SecretPassword)" -ForegroundColor Cyan
 Write-Host "Comptes RBAC : analyste / Analyste2026!SOC   -   supervision / Supervision2026!SOC" -ForegroundColor Cyan
-Write-Host "Verifie : Agents (poste-01, serveur-01 Active) + alertes 5712 et alertes Daylight 100100-100160 si rejouees." -ForegroundColor Cyan
+Write-Host "Verifie : Agents (poste-01, serveur-01 Active) + alertes 5712 et 100120." -ForegroundColor Cyan

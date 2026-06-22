@@ -22,6 +22,8 @@ Ce dossier contient les supports PDF utiles si le jury demande plus de detail ou
 - checklist onboarding ;
 - stack technique concrete ;
 - argumentaire solutions concretes.
+- partie Wazuh Youssef ;
+- script video Wazuh Youssef.
 
 Ces fichiers ne remplacent pas le rapport final, mais ils sont utiles pour expliquer le projet.
 
@@ -36,4 +38,3 @@ Ce dossier contient tes notes personnelles :
 - notes pour retrouver rapidement quoi montrer.
 
 Ces PDF servent a preparer et enregistrer la video. Ils ne sont pas a deposer comme livrables principaux.
-

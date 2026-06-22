@@ -28,6 +28,7 @@ Le cahier des charges demande un SIEM open-source centralise, une collecte multi
 | Automatisation SIEM | Script `setup-siem-lab.ps1` pour deployer `serveur-01`, tester SSH et configurer le RBAC. |
 | Guide technique | Documentation des prerequis, commandes et preuves. |
 | Support demo | Preparation de l'interface pour la video MVP. |
+| Documentation personnelle | Integration de `Documentation_SIEM_Youssef_GUERNIOU.pdf` et du dossier `livrables/youssef/`. |
 
 ## 3. Travail realise
 
@@ -38,6 +39,10 @@ J'ai ensuite verifie l'etat des services. Les preuves du sprint 01 montrent que 
 J'ai aussi travaille sur l'integration des logs Daylight. Les sources utilisees couvrent plusieurs briques du cahier des charges : endpoint, firewall/syslog, application metier et Active Directory simule. Cette integration permet de tester les regles de detection et de produire des alertes visibles dans le SIEM.
 
 En complement, j'ai fourni un script PowerShell `scripts/setup-siem-lab.ps1` pour rendre le lab plus reproductible. Ce script cree ou redemarre le conteneur Linux `serveur-01`, installe l'agent Wazuh 4.14.5-1, active SSH et rsyslog, ajoute la collecte de `/var/log/auth.log`, simule une brute force SSH et configure deux comptes de consultation `analyste` et `supervision` via le role lecture seule `soc_readonly`.
+
+La documentation SIEM fournie dans `livrables/youssef/supports/Documentation_SIEM_Youssef_GUERNIOU.pdf` consolide les preuves de mon perimetre : Wazuh 4.14.5, sources `poste-01`, `serveur-01` et Daylight, dashboards technique/executive, RBAC et procedure de reprise du lab.
+
+Les captures Wazuh live disponibles dans `livrables/preuves/wazuh-live-captures/` completent cette documentation. Elles montrent une interface Wazuh reelle, des alertes Daylight indexees, une vue Threat Hunting et une alerte firewall/syslog `100160`.
 
 ## 4. Perspectives d'evolution de la solution
 
@@ -53,7 +58,7 @@ La premiere limite est la complexite de Wazuh. La plateforme est puissante, mais
 
 La deuxieme limite vient de l'environnement Docker. Il est tres pratique pour un demonstrateur, mais il ne represente pas completement un parc client compose de postes Windows, serveurs internes, firewalls et applications de production.
 
-La troisieme limite concerne les captures. Les captures dashboard du demonstrateur ont ete consolidees pour le rapport et la video, mais elles devront idealement etre remplacees par des captures Wazuh live si l'environnement technique est disponible le jour de la soutenance.
+La troisieme limite concerne les agents reels. Les captures Wazuh live existent maintenant pour la stack centrale et les alertes Daylight, mais il faudrait encore relancer le lab complet `poste-01` / `serveur-01` pour produire des captures supplementaires sur les agents actifs et l'alerte SSH `5712`.
 
 ## 6. Analyse critique personnelle
 
@@ -113,4 +118,4 @@ Enfin, je mettrais en place une checklist de controle apres chaque modification 
 
 Ma contribution est centree sur le socle SIEM. J'ai travaille sur la mise en place de Wazuh, l'integration des logs et la validation des alertes. Cette partie est essentielle car elle rend le projet demonstrable.
 
-La suite logique consisterait a remplacer les captures de demonstrateur par des captures Wazuh live, renforcer les dashboards par role, documenter l'installation et preparer une presentation claire de la plateforme pour la video MVP.
+La suite logique consisterait a completer les captures agents `poste-01` et `serveur-01`, renforcer les dashboards par role, documenter l'installation et preparer une presentation claire de la plateforme pour la video MVP.

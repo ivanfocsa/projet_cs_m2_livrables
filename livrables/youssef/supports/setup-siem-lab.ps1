@@ -73,7 +73,7 @@ if ($exists) {
     docker start $serverContainer | Out-Null
 } else {
     Write-Host "[*] Creation du conteneur $serverContainer (Ubuntu 22.04)..." -ForegroundColor Green
-    docker run -d --name $serverContainer --hostname $serverContainer ubuntu:22.04 sleep infinity | Out-Null
+    docker run --platform linux/amd64 -d --name $serverContainer --hostname $serverContainer ubuntu:22.04 sleep infinity | Out-Null
 }
 
 $serverBash = @'

@@ -8,7 +8,7 @@ Objectif : video de 15 a 20 minutes, structuree besoin -> solution -> demonstrat
 |---:|---|---|---|
 | 0:00 - 2:00 | Kilyan FELIX | Presentation du client Daylight, besoin cyber et contexte multi-sites. | Cahier des charges, rapport. |
 | 2:00 - 5:00 | Yvan FOCSA | Architecture SOC externalise, perimetre MVP, flux de collecte, passage de 3 sites simules a 30 sites. | Schema architecture, guide onboarding. |
-| 5:00 - 8:00 | Youssef GUERNIOU | Socle SIEM Wazuh, script `setup-siem-lab.ps1`, agent `serveur-01`, collecte SSH/syslog, RBAC `analyste`/`supervision`. | Guide de deploiement, documentation SIEM Youssef, dashboard Wazuh. |
+| 5:00 - 8:00 | Youssef GUERNIOU | Socle SIEM Wazuh, script `setup-siem-lab.ps1`, agent `serveur-01`, collecte SSH/syslog, RBAC `analyste`/`supervision`, captures Wazuh live. | Guide de deploiement, documentation SIEM Youssef, dashboard Wazuh live. |
 | 8:00 - 13:00 | Mahamadou DIACOUMBA | Alertes SOC : `100100`, `100110`, `100120`, `100130`, `100140`. | Captures dashboard et table alertes. |
 | 13:00 - 16:00 | Kilyan / Mahamadou | Playbooks et traitement incident : qualification, action, documentation, REX. | Playbooks, REX incidents. |
 | 16:00 - 18:00 | Yvan FOCSA | Industrialisation, limites, couts, prochaines evolutions. | Checklist onboarding, gestion des couts, limites. |
@@ -23,10 +23,18 @@ Objectif : video de 15 a 20 minutes, structuree besoin -> solution -> demonstrat
 - `livrables/preuves/sprint-01/captures-dashboard/05-alerte-dossier-patient-100120.png`
 - `livrables/preuves/sprint-01/captures-dashboard/06-alerte-groupe-privilegie-100130.png`
 - `livrables/preuves/sprint-01/captures-dashboard/07-alerte-usb-100140.png`
+- `livrables/preuves/wazuh-live-captures/04-wazuh-overview-with-daylight-alerts-real.png`
+- `livrables/preuves/wazuh-live-captures/05-wazuh-discover-high-alerts-real.png`
+- `livrables/preuves/wazuh-live-captures/07-wazuh-firewall-portscan-100160-real.png`
 - `scripts/setup-siem-lab.ps1`
 - `livrables/youssef/supports/Documentation_SIEM_Youssef_GUERNIOU.pdf`
+- `livrables/youssef/02_script_video_youssef_3_min.md`
 - `livrables/yvan/06_script_video_yvan_final.md`
 - `étape 1/docs/04_Gestion_Couts.md`
+
+## Rappel oral pour Youssef
+
+Ma partie consiste a prouver que le SOC repose sur un vrai SIEM. Je dois montrer Wazuh Manager, Indexer et Dashboard, expliquer le script `setup-siem-lab.ps1`, les sources `poste-01`, `serveur-01`, Daylight et firewall/syslog, puis finir sur le RBAC `admin` / `analyste` / `supervision`.
 
 ## Rappel oral pour Yvan
 
