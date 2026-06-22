@@ -25,6 +25,7 @@ Mon perimetre couvre surtout :
 | 5 | `diagrams/architecture_soc_externalise.drawio` | Source editable Draw.io du schema d'architecture. |
 | 6 | `pdf/06_Script_Video_Yvan_Final.pdf` | Script final pret a lire pour la video. |
 | 7 | `pdf/07_Stack_Technique_Concrete_Yvan.pdf` | Reponses concretes si le jury demande les produits, flux et ports. |
+| 8 | `pdf/08_Argumentaire_Solutions_Concretes_Yvan.pdf` | Choix concrets argumentes pour chaque notion de ma partie. |
 
 ## Message cle a defendre
 
@@ -39,6 +40,7 @@ Le cahier des charges parle d'un reseau d'environ 30 centres. Le MVP ne simule p
 | Architecture technique | Complete | Schema PNG + Draw.io + document architecture. |
 | Flux de collecte | Complete | Schema flux + section ports/protocoles. |
 | Stack concrete | Complete | pfSense CE, Wazuh agents, serveurs, apps, logs et ports. |
+| Argumentaire technique | Complete | Choix concrets, alternatives, limites et phrases jury. |
 | Industrialisation | Complete | Checklist onboarding + inventaire site exemple. |
 | Couts | Complete pour ma partie | Phrase courte integree au script et au rendu. |
 | Script video | Pret | `06_script_video_yvan_final.md` et PDF associe. |

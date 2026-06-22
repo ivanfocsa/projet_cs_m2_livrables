@@ -145,10 +145,10 @@ Ces flux permettent d'expliquer que le MVP n'est pas seulement un schema logique
 | SIEM | Wazuh | Open-source, adapte a un SOC demonstrateur, interface web, agents, regles et alertes. |
 | Moteur de recherche | OpenSearch integre a Wazuh | Necessaire pour indexer et consulter les evenements. |
 | Collecte postes | Agents Wazuh | Collecte centralisee des evenements systeme et securite. |
-| Logs Windows avances | Sysmon optionnel | Permet de detecter executions suspectes, processus et activite locale. |
+| Logs Windows avances | Sysmon en evolution production | Permet de detecter executions suspectes, processus et activite locale ; non obligatoire pour prouver le MVP. |
 | Logs firewall | pfSense CE avec export syslog | Repond au besoin de supervision routeur/firewall avec une solution concrete. |
-| Detection reseau | Suricata optionnel | Ajoute une brique IDS si l'equipe a le temps. |
-| Automatisation | Scripts Bash/Python ou Shuffle optionnel | Permet de creer des playbooks semi-automatises. |
+| Detection reseau | Regles Wazuh sur logs pfSense, Suricata en evolution | Le MVP exploite deja le syslog firewall ; Suricata ajouterait une inspection IDS plus avancee en production. |
+| Automatisation | Playbooks Markdown dans le MVP, Shuffle/TheHive en evolution | Le cahier des charges demande une reponse semi-automatisee ; ticketing et orchestration peuvent venir ensuite. |
 | Documentation | Markdown/PDF | Simple a maintenir, exportable et lisible. |
 
 Le choix de Wazuh est coherent avec le besoin du client car il permet de construire un SOC open-source centralise, de connecter plusieurs sources de logs, d'ecrire des regles de detection et de produire des dashboards accessibles via navigateur.

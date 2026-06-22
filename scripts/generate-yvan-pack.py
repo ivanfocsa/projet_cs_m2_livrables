@@ -57,6 +57,11 @@ PDF_SOURCES = [
         "Stack technique concrete - Yvan",
     ),
     (
+        YVAN / "08_argumentaire_solutions_concretes_yvan.md",
+        "08_Argumentaire_Solutions_Concretes_Yvan.pdf",
+        "Argumentaire solutions concretes - Yvan",
+    ),
+    (
         YVAN / "supports" / "00_ORDRE_OUVERTURE_SUPPORTS.md",
         "00_Ordre_Ouverture_Supports.pdf",
         "Ordre d'ouverture des supports Yvan",
