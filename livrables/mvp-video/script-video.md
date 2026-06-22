@@ -8,7 +8,7 @@ Objectif : video de 15 a 20 minutes, structuree besoin -> solution -> demonstrat
 |---:|---|---|---|
 | 0:00 - 2:00 | Kilyan FELIX | Presentation du client Daylight, besoin cyber et contexte multi-sites. | Cahier des charges, rapport. |
 | 2:00 - 5:00 | Yvan FOCSA | Architecture SOC externalise, perimetre MVP, passage de 3 sites simules a 30 sites. | Schema architecture, guide onboarding. |
-| 5:00 - 8:00 | Youssef GUERNIOU | Socle SIEM Wazuh, collecte agents/syslog/logs applicatifs, sources de logs. | Guide de deploiement, inventaire logs. |
+| 5:00 - 8:00 | Youssef GUERNIOU | Socle SIEM Wazuh, script `setup-siem-lab.ps1`, agent `serveur-01`, collecte SSH/syslog, RBAC `analyste`/`supervision`. | Guide de deploiement, documentation SIEM Youssef, dashboard Wazuh. |
 | 8:00 - 13:00 | Mahamadou DIACOUMBA | Alertes SOC : `100100`, `100110`, `100120`, `100130`, `100140`. | Captures dashboard et table alertes. |
 | 13:00 - 16:00 | Kilyan / Mahamadou | Playbooks et traitement incident : qualification, action, documentation, REX. | Playbooks, REX incidents. |
 | 16:00 - 18:00 | Yvan FOCSA | Industrialisation, limites, couts, prochaines evolutions. | Checklist onboarding, couts, limites. |
@@ -23,6 +23,8 @@ Objectif : video de 15 a 20 minutes, structuree besoin -> solution -> demonstrat
 - `livrables/preuves/sprint-01/captures-dashboard/05-alerte-dossier-patient-100120.png`
 - `livrables/preuves/sprint-01/captures-dashboard/06-alerte-groupe-privilegie-100130.png`
 - `livrables/preuves/sprint-01/captures-dashboard/07-alerte-usb-100140.png`
+- `scripts/setup-siem-lab.ps1`
+- `livrables/youssef/supports/Documentation_SIEM_Youssef_GUERNIOU.pdf`
 
 ## Rappel oral pour Yvan
 

@@ -31,6 +31,14 @@ Actions :
 
 Documentation interne : [../infra/wazuh/README.md](../infra/wazuh/README.md)
 
+Automatisation disponible :
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\setup-siem-lab.ps1
+```
+
+Cette commande reprend le perimetre SIEM documente par Youssef : conteneur `serveur-01`, agent Wazuh, collecte `/var/log/auth.log`, simulation brute force SSH, comptes RBAC `analyste` et `supervision`, puis generation des logs/preuves Daylight selon les scripts npm presents dans le depot.
+
 ### Etape 2 - Connecter un premier agent
 
 Actions :
@@ -130,9 +138,10 @@ Pour un administrateur :
 | Dashboard accessible | Youssef |
 | Agent actif | Youssef |
 | Log syslog recu | Youssef |
+| Alerte SSH brute force `5712` | Youssef |
+| RBAC `analyste` / `supervision` lecture seule | Youssef |
 | Log applicatif recu | Mahamadou |
 | Alerte brute force | Kilyan |
 | Dashboard supervision | Kilyan |
 | Playbook applique | Mahamadou |
 | Capture finale pour rapport | Yvan |
-

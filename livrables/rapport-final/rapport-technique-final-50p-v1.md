@@ -274,6 +274,8 @@ Wazuh est compose de plusieurs briques.
 
 Dans le sprint 01, les preuves montrent que la stack Wazuh est active et que les services essentiels fonctionnent. Cette base technique rend possible les phases suivantes : integration de logs, creation de regles et creation de dashboards.
 
+Le script `scripts/setup-siem-lab.ps1`, fourni a partir du travail de Youssef, complete ce socle. Il automatise le serveur Linux simule `serveur-01`, l'agent Wazuh, la collecte SSH via `/var/log/auth.log`, le test brute force et le RBAC de demonstration.
+
 <!-- pagebreak -->
 
 ## Page 17 - Manager, Indexer et Dashboard
@@ -288,7 +290,7 @@ Le Manager est le coeur du SIEM. Il recoit les logs, les analyse et genere des a
 
 La preuve `docker-compose-ps.txt` montre que les conteneurs sont actifs. La preuve `wazuh-manager-status.txt` montre que plusieurs services internes Wazuh sont en cours d'execution.
 
-La prochaine preuve visuelle importante sera une capture du dashboard Wazuh affichant les alertes Daylight.
+La preuve documentaire SIEM de Youssef est conservee dans `livrables/youssef/supports/Documentation_SIEM_Youssef_GUERNIOU.pdf`. Elle decrit notamment la stack Wazuh 4.14.5, les sources `poste-01` et `serveur-01`, les dashboards et la reprise du lab apres redemarrage.
 
 <!-- pagebreak -->
 
@@ -706,6 +708,8 @@ Le sprint 01 a produit des preuves techniques importantes.
 | Alertes detectees | `livrables/preuves/sprint-01/daylight-alerts-table.md` |
 | Extrait alertes | `livrables/preuves/sprint-01/alerts-tail.txt` |
 | Captures dashboard | `livrables/preuves/sprint-01/captures-dashboard/` |
+| Script SIEM Youssef | `scripts/setup-siem-lab.ps1` |
+| Documentation SIEM Youssef | `livrables/youssef/supports/Documentation_SIEM_Youssef_GUERNIOU.pdf` |
 
 Les captures visuelles du dossier `captures-dashboard/` permettent de montrer la supervision globale, la liste des alertes et le detail des alertes principales `100100` a `100160`.
 
@@ -843,6 +847,7 @@ Mesures recommandees :
 - comptes nominatifs ;
 - mots de passe robustes ;
 - RBAC supervision / analyste / admin ;
+- role lecture seule `soc_readonly` pour `analyste` et `supervision` dans le lab ;
 - acces dashboard restreint ;
 - sauvegardes de configuration ;
 - mises a jour regulieres ;
@@ -895,6 +900,8 @@ Annexes a joindre :
 - playbooks ;
 - REX incidents ;
 - guide de deploiement ;
+- script SIEM Youssef ;
+- documentation SIEM Youssef ;
 - rendus individuels ;
 - script video.
 

@@ -25,6 +25,7 @@ Le cahier des charges demande un SIEM open-source centralise, une collecte multi
 | Integration des logs | Preparation de l'ingestion des logs endpoint, firewall, applicatifs et AD. |
 | Regles locales | Support a l'ajout des regles personnalisees dans Wazuh. |
 | Dashboards | Preparation des vues techniques pour suivre les alertes et la collecte. |
+| Automatisation SIEM | Script `setup-siem-lab.ps1` pour deployer `serveur-01`, tester SSH et configurer le RBAC. |
 | Guide technique | Documentation des prerequis, commandes et preuves. |
 | Support demo | Preparation de l'interface pour la video MVP. |
 
@@ -36,11 +37,13 @@ J'ai ensuite verifie l'etat des services. Les preuves du sprint 01 montrent que 
 
 J'ai aussi travaille sur l'integration des logs Daylight. Les sources utilisees couvrent plusieurs briques du cahier des charges : endpoint, firewall/syslog, application metier et Active Directory simule. Cette integration permet de tester les regles de detection et de produire des alertes visibles dans le SIEM.
 
+En complement, j'ai fourni un script PowerShell `scripts/setup-siem-lab.ps1` pour rendre le lab plus reproductible. Ce script cree ou redemarre le conteneur Linux `serveur-01`, installe l'agent Wazuh 4.14.5-1, active SSH et rsyslog, ajoute la collecte de `/var/log/auth.log`, simule une brute force SSH et configure deux comptes de consultation `analyste` et `supervision` via le role lecture seule `soc_readonly`.
+
 ## 4. Perspectives d'evolution de la solution
 
 La premiere evolution technique serait de connecter de vrais agents Wazuh sur des VMs Windows et Linux. Les logs rejoues sont utiles pour le MVP, mais des agents reels permettraient de montrer des evenements systeme plus proches d'une production.
 
-La deuxieme evolution concerne le RBAC. Le cahier des charges mentionne des roles supervision, analyste et admin. Il faudrait donc configurer des droits differencies dans Wazuh Dashboard afin que chaque profil accede uniquement aux vues et actions necessaires.
+La deuxieme evolution concerne le RBAC. Une premiere base de demonstration existe deja avec les profils `analyste` et `supervision` en lecture seule. Pour une production, il faudrait aller plus loin : comptes nominatifs, MFA, separation des tenants, journalisation des actions et revue periodique des droits.
 
 La troisieme evolution serait d'ameliorer les dashboards. Il faudrait creer des vues par criticite, par site, par source, par scenario et par machine afin de faciliter le travail de supervision et de qualification.
 
@@ -64,6 +67,7 @@ Je retiens aussi que la stabilite de la demo est essentielle. Pour une video ou 
 
 - installer une stack Wazuh complete ;
 - comprendre les roles du manager, de l'indexer et du dashboard ;
+- automatiser une partie du lab avec PowerShell et Docker ;
 - integrer plusieurs familles de logs ;
 - faire correspondre les champs des logs aux regles ;
 - obtenir des alertes exploitables ;
@@ -91,13 +95,15 @@ Je dois aussi progresser sur les dashboards. Une bonne interface SOC ne doit pas
 - comprehension de Wazuh Manager, Indexer et Dashboard ;
 - integration de logs multi-source ;
 - verification de services Docker ;
+- configuration d'un agent Linux `serveur-01` ;
+- mise en place d'un RBAC de demonstration ;
 - lecture et test de regles de detection ;
 - documentation technique ;
 - preparation d'une demonstration SIEM.
 
 ## 11. Axes d'amelioration pour de futurs projets
 
-Pour un futur projet, je commencerais par automatiser l'installation du SIEM avec un script ou une procedure pas a pas. Cela reduirait les risques d'erreur et faciliterait la reproduction par l'equipe.
+Pour un futur projet, je completerais l'automatisation existante avec un demarrage complet de la stack Wazuh, un controle automatique des agents et une verification automatique des alertes attendues. Cela reduirait les risques d'erreur et faciliterait la reproduction par l'equipe.
 
 Je preparerais aussi un jeu de donnees de test pour chaque source de logs, avec un evenement normal et un evenement suspect. Cela permettrait de valider rapidement chaque regle.
 

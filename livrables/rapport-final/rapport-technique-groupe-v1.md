@@ -148,6 +148,8 @@ Le choix de Docker est assume pour le demonstrateur. L'objectif du MVP est de va
 
 Dans ce contexte, Docker est utilise pour representer les serveurs, services applicatifs, generateurs de logs et composants SOC. Pour une mise en production, certains elements seraient remplaces ou completes par des actifs reels : postes Windows avec agent Wazuh, serveurs internes, Active Directory, firewall physique ou virtuel et applications metier de production.
 
+Le perimetre SIEM documente par Youssef ajoute un script d'automatisation `scripts/setup-siem-lab.ps1`. Il cree le serveur Linux simule `serveur-01`, installe un agent Wazuh 4.14.5-1, active SSH/rsyslog, collecte `/var/log/auth.log`, simule une brute force SSH attendue en alerte `5712` et configure le RBAC de demonstration avec les comptes `analyste` et `supervision` en lecture seule.
+
 Cette approche est donc adaptee au MVP car elle rend l'environnement leger, portable et facilement rejouable. Elle reste compatible avec l'industrialisation, car les flux et procedures definis dans Docker peuvent ensuite etre transposes vers des VMs ou equipements reels.
 
 Preuve de suivi disponible : `livrables/preuves/sprint-01/docker-compose-ps.txt`.
@@ -360,4 +362,6 @@ Le MVP montre la valeur d'un SOC externalise pour Daylight : centralisation, det
 | Etat Wazuh | `livrables/preuves/sprint-01/wazuh-manager-status.txt` |
 | REX incidents | `livrables/rapport-final/rex-incidents-simules.md` |
 | Playbooks | `etape 1/playbooks/` |
+| Script SIEM Youssef | `scripts/setup-siem-lab.ps1` |
+| Documentation SIEM Youssef | `livrables/youssef/supports/Documentation_SIEM_Youssef_GUERNIOU.pdf` |
 | Script video | `livrables/mvp-video/script-video.md` |
