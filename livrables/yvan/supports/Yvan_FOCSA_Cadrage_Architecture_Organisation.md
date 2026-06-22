@@ -62,7 +62,7 @@ Cette approche permet de demontrer la scalabilite de la solution : le modele est
 | Brique SI | Besoins du cahier des charges | Couverture dans le MVP |
 |---|---|---|
 | Postes de travail | Authentifications locales, executions suspectes, usage USB | Agent Wazuh, logs Windows/Linux, Sysmon si disponible. |
-| Routeurs / firewall | Flux reseau, acces non autorises, configuration | Syslog firewall/pfSense ou generation de logs reseau realistes. |
+| Routeurs / firewall | Flux reseau, acces non autorises, configuration | pfSense CE cible, `FW-S01`/`FW-S02` dans le MVP, syslog vers Wazuh. |
 | Applications metiers | Logs applicatifs, erreurs, acces anormaux | Application metier simulee CRM/RDV/dossiers patients. |
 | Serveurs internes | Active Directory, fichiers, elevation de privileges | Serveur Windows/Linux simule, logs d'acces fichiers et comptes. |
 | Messagerie professionnelle | Phishing, spam, pieces jointes suspectes | Logs de phishing simules et scenario d'alerte dedie. |
@@ -96,12 +96,12 @@ flowchart TB
         PC1["Poste audioprothesiste"]
         SRV["Serveur interne / fichiers"]
         APP["Application metier simulee"]
-        FW1["Firewall / routeur"]
+        FW1["Firewall pfSense CE / FW-S01"]
     end
 
     subgraph SITE2["Site 2 - Centre secondaire"]
         PC2["Poste utilisateur"]
-        FW2["Firewall / routeur"]
+        FW2["Firewall pfSense CE / FW-S02"]
     end
 
     subgraph SITE3["Site 3 - Centre distant"]
@@ -130,7 +130,7 @@ flowchart TB
 |---|---|---|---|---|
 | Agent Wazuh | Postes / serveurs | Wazuh Manager | 1514 | Restreindre aux machines declarees. |
 | Enrolement agent | Postes / serveurs | Wazuh Manager | 1515 | Utiliser seulement a l'installation. |
-| Syslog | Firewalls / routeurs | Wazuh Manager | 514 ou port dedie | Filtrer par IP source et segment reseau. |
+| Syslog | pfSense CE `FW-S01` / `FW-S02` | Wazuh Manager | 514 en lab, 5514 ou tunnel VPN en production | Filtrer par IP source et segment reseau. |
 | Dashboard | Analystes / admin | Wazuh Dashboard | HTTPS 443 | RBAC, comptes nominatifs, mot de passe fort. |
 | API Wazuh | Dashboard / admin | Wazuh Manager | 55000 | Acces admin ou interne uniquement. |
 | Indexation | Manager | Indexer/OpenSearch | 9200 | Flux interne SOC non expose aux sites. |
@@ -146,7 +146,7 @@ Ces flux permettent d'expliquer que le MVP n'est pas seulement un schema logique
 | Moteur de recherche | OpenSearch integre a Wazuh | Necessaire pour indexer et consulter les evenements. |
 | Collecte postes | Agents Wazuh | Collecte centralisee des evenements systeme et securite. |
 | Logs Windows avances | Sysmon optionnel | Permet de detecter executions suspectes, processus et activite locale. |
-| Logs firewall | Syslog ou pfSense | Repond au besoin de supervision routeur/firewall. |
+| Logs firewall | pfSense CE avec export syslog | Repond au besoin de supervision routeur/firewall avec une solution concrete. |
 | Detection reseau | Suricata optionnel | Ajoute une brique IDS si l'equipe a le temps. |
 | Automatisation | Scripts Bash/Python ou Shuffle optionnel | Permet de creer des playbooks semi-automatises. |
 | Documentation | Markdown/PDF | Simple a maintenir, exportable et lisible. |
@@ -160,7 +160,7 @@ Le choix de Wazuh est coherent avec le besoin du client car il permet de constru
 | Postes utilisateurs | Malware, execution suspecte, usage USB non autorise | Agent Wazuh, Sysmon, regles sur evenements locaux. |
 | Comptes utilisateurs | Brute force, authentification anormale, elevation de privileges | Logs d'authentification, correlation des echecs et succes. |
 | Serveurs internes | Acces non autorise aux fichiers, modification de droits | Surveillance fichiers, logs systeme, alertes privilege escalation. |
-| Firewall / routeur | Scan, connexion non autorisee, modification de configuration | Logs syslog, regles sur IP suspectes et ports sensibles. |
+| Firewall pfSense CE | Scan, connexion non autorisee, modification de configuration | Logs syslog `FW-S01`/`FW-S02`, regles sur IP suspectes et ports sensibles. |
 | Application metier | Acces anormal aux dossiers patients, erreurs repetees | Logs applicatifs simules, regles sur comportement inhabituel. |
 | Messagerie | Phishing, piece jointe suspecte, lien malveillant | Logs de messagerie simules, playbook phishing. |
 

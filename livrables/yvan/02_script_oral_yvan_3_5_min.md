@@ -19,7 +19,7 @@ Le client represente un reseau d'audioprothesistes avec environ 30 points de ven
 
 Pour le MVP, nous avons fait un choix volontaire : ne pas reproduire directement les 30 sites. Nous avons retenu trois sites simules, car cela permet de prouver la chaine SOC sans complexifier inutilement l'environnement. L'objectif est de demontrer le modele complet : collecte, detection, alerte, investigation, playbook et reporting.
 
-Sur le schema d'architecture, on voit que le SOC est centralise cote prestataire autour de Wazuh. Les sites clients restent producteurs de logs. Les postes et serveurs remontent leurs evenements via agents Wazuh, les firewalls via syslog, et les applications metier via des fichiers de logs applicatifs. Ces evenements sont ensuite centralises dans le SIEM, indexes, analyses par les regles de detection et rendus visibles dans les dashboards.
+Sur le schema d'architecture, on voit que le SOC est centralise cote prestataire autour de Wazuh. Les sites clients restent producteurs de logs. Les postes et serveurs remontent leurs evenements via agents Wazuh, les firewalls via syslog, et les applications metier via des fichiers de logs applicatifs. Pour le firewall, le choix cible concret est pfSense CE ; dans le MVP, il est represente par `FW-S01` et `FW-S02` avec des logs syslog simules. Ces evenements sont ensuite centralises dans le SIEM, indexes, analyses par les regles de detection et rendus visibles dans les dashboards.
 
 Ce choix repond au cahier des charges parce que Wazuh est open-source, accessible via navigateur, compatible avec une collecte multi-source et adapte a une logique d'infogerance. Le demonstrateur reste volontairement limite, mais il montre une architecture reproductible et scalable.
 
@@ -37,7 +37,7 @@ Bonjour, je suis Yvan FOCSA, architecte securite et infrastructure sur le projet
 
 Le client represente environ 30 centres d'audioprothesistes. Pour le MVP, nous simulons trois sites representatifs afin de prouver une chaine SOC complete sans reproduire toute la complexite de la production.
 
-L'architecture centralise les evenements dans Wazuh. Les postes et serveurs utilisent des agents, les firewalls envoient du syslog, et les applications metier produisent des logs applicatifs. Ces evenements alimentent les regles, les alertes, les dashboards et les playbooks.
+L'architecture centralise les evenements dans Wazuh. Les postes et serveurs utilisent des agents, les firewalls pfSense CE envoient du syslog, et les applications metier produisent des logs applicatifs. Ces evenements alimentent les regles, les alertes, les dashboards et les playbooks.
 
 Ma partie consiste aussi a montrer le passage a l'echelle : conventions de nommage, inventaire, checklist onboarding, templates et dashboards filtrables par site. Cote couts, Wazuh limite le cout logiciel du MVP, mais en production il faudrait anticiper l'infrastructure, le stockage, l'exploitation SOC et la maintenance.
 
@@ -56,4 +56,3 @@ Si on me demande si Docker suffit pour la production :
 Si on me demande les couts :
 
 > Le MVP limite les couts logiciels grace a Wazuh. En production, les couts principaux seraient l'infrastructure, le stockage des logs, l'exploitation SOC et l'onboarding des sites.
-

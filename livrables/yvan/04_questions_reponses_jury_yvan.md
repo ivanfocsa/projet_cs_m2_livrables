@@ -12,6 +12,10 @@ Wazuh est open-source, centralise, dispose d'agents, d'une interface web, d'un m
 
 Non, Docker est surtout adapte au demonstrateur. Pour une production, on prevoirait des actifs reels : postes avec agents, serveurs internes, firewall ou pfSense, haute disponibilite, sauvegarde et politique de retention. Docker permet ici de rendre le MVP plus leger et reproductible.
 
+## Quel firewall utilisez-vous pour syslog ?
+
+Le choix concret cible est pfSense CE. Dans le MVP, les firewalls sont representes par `FW-S01` et `FW-S02`, avec des logs syslog simules dans `etape 1/logs/generated/firewall_syslog.log`. En production, chaque centre aurait un firewall pfSense CE ou un equipement equivalent qui exporte ses logs vers Wazuh via syslog, idealement dans un tunnel VPN et avec filtrage par IP source.
+
 ## Comment passer de 3 sites simules a 30 sites reels ?
 
 Il faut standardiser l'onboarding : inventaire site, convention de nommage, package agent, configuration syslog, test d'alerte, validation dashboard et reporting. C'est pour cela que le projet contient une checklist d'onboarding et un exemple d'inventaire.
@@ -31,4 +35,3 @@ La matrice de conformite relie chaque exigence a une reponse projet : SIEM open-
 ## Quelles evolutions recommanderais-tu ?
 
 Ajouter des agents reels sur VMs, integrer Suricata pour la detection reseau, ajouter TheHive ou Shuffle pour le ticketing et l'automatisation, mettre en place du RBAC avance et dimensionner une architecture haute disponibilite.
-

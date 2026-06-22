@@ -21,7 +21,9 @@ sites:
         collection: file-log
       - hostname: FW-S01
         type: firewall
+        product: pfSense CE
         collection: syslog
+        syslog_target: SOC-EXTERNALISE-01:514
   - id: SITE-02
     name: Centre secondaire
     city: Lyon
@@ -32,7 +34,9 @@ sites:
         collection: wazuh-agent
       - hostname: FW-S02
         type: firewall
+        product: pfSense CE
         collection: syslog
+        syslog_target: SOC-EXTERNALISE-01:514
       - hostname: MAIL-S02
         type: mail
         collection: file-log
@@ -47,4 +51,3 @@ sites:
       - hostname: APP-S03-LOGS
         type: application
         collection: file-log
-

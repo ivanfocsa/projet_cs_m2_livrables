@@ -40,7 +40,7 @@ J'ai aussi relie chaque brique SI du cahier des charges a un mode de collecte et
 | Brique SI | Risque principal | Mode de collecte MVP | Scenario ou preuve associee |
 |---|---|---|---|
 | Postes de travail | Execution suspecte, usage USB, compromission locale | Agent Wazuh ou logs endpoint rejoues | Alertes `100100` et `100140`. |
-| Routeurs / firewalls | Brute force, scan, acces non autorise | Syslog ou logs firewall simules | Alertes `100110` et `100160`. |
+| Routeurs / firewalls | Brute force, scan, acces non autorise | pfSense CE cible, `FW-S01`/`FW-S02` et logs syslog simules dans le MVP | Alertes `100110` et `100160`. |
 | Applications metier | Acces anormal aux dossiers patients | Logs applicatifs JSON | Alerte `100120`. |
 | Serveurs internes / AD | Elevation de privileges, acces fichiers | Agent serveur ou logs AD simules | Alerte `100130`. |
 | Messagerie professionnelle | Phishing, piece jointe ou lien suspect | Logs mail simules | Alerte `100150` et playbook phishing. |
@@ -169,7 +169,7 @@ Ma partie architecture est documentee. Ce qu'il me reste a faire techniquement e
 | Refaire le zip final apres lien video ou nouvelles captures | Haute groupe | Garder un depot final propre. |
 | Exporter les schemas Mermaid en PNG si possible | Optionnel | Faciliter l'affichage pendant la video. |
 
-Techniquement, je dois surtout etre capable d'expliquer les flux suivants : agent Wazuh pour postes et serveurs, syslog pour firewall, logs applicatifs pour l'application metier, dashboard web pour les analystes, puis playbooks pour la reponse. Je dois aussi rappeler que les ports et protocoles seraient verrouilles en production par pare-feu, VPN ou filtrage reseau.
+Techniquement, je dois surtout etre capable d'expliquer les flux suivants : agent Wazuh pour postes et serveurs, syslog pfSense CE pour firewall, logs applicatifs pour l'application metier, dashboard web pour les analystes, puis playbooks pour la reponse. Je dois aussi rappeler que les ports et protocoles seraient verrouilles en production par pare-feu, VPN ou filtrage reseau.
 
 ## 14. Axes d'amelioration pour de futurs projets
 

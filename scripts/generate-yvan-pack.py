@@ -52,6 +52,11 @@ PDF_SOURCES = [
     (YVAN / "05_checklist_finale_yvan.md", "05_Checklist_Finale_Yvan.pdf", "Checklist finale - Yvan"),
     (YVAN / "06_script_video_yvan_final.md", "06_Script_Video_Yvan_Final.pdf", "Script video final - Yvan"),
     (
+        YVAN / "07_stack_technique_concrete_yvan.md",
+        "07_Stack_Technique_Concrete_Yvan.pdf",
+        "Stack technique concrete - Yvan",
+    ),
+    (
         YVAN / "supports" / "00_ORDRE_OUVERTURE_SUPPORTS.md",
         "00_Ordre_Ouverture_Supports.pdf",
         "Ordre d'ouverture des supports Yvan",
@@ -409,8 +414,8 @@ def generate_architecture_png():
     draw.text((soc[0] + 22, soc[1] + 20), "SOC externalise - Prestataire", font=FONT_H, fill="#172033")
 
     site_boxes = [
-        ((80, 190, 760, 190), "Site 1 - Centre principal", "Poste audioprothesiste, serveur interne / AD, application CRM/RDV, firewall."),
-        ((80, 455, 760, 160), "Site 2 - Centre secondaire", "Poste utilisateur, firewall, messagerie simulee."),
+        ((80, 190, 760, 190), "Site 1 - Centre principal", "Poste audioprothesiste, serveur interne / AD, application CRM/RDV, pfSense FW-S01."),
+        ((80, 455, 760, 160), "Site 2 - Centre secondaire", "Poste utilisateur, pfSense FW-S02, messagerie simulee."),
         ((80, 690, 760, 145), "Site 3 - Centre distant", "Poste utilisateur et logs applicatifs simules."),
     ]
     for box, title, body in site_boxes:
@@ -429,7 +434,7 @@ def generate_architecture_png():
     for y in [400, 525, 650]:
         arrow(draw, (1395, y), (1395, y + 30), "#7C99D8", 4)
 
-    draw.text((90, 900), "Flux principaux : agents Wazuh, syslog firewall, logs applicatifs, logs messagerie.", font=FONT_M, fill="#172033")
+    draw.text((90, 900), "Flux principaux : agents Wazuh, syslog pfSense, logs applicatifs, logs messagerie.", font=FONT_M, fill="#172033")
     draw.text((90, 942), "Securisation production : filtrage reseau, RBAC, retention, sauvegardes et supervision de sante.", font=FONT_M, fill="#172033")
     img.save(DIAGRAM_DIR / "architecture_soc_externalise.png", quality=95)
 
@@ -440,7 +445,7 @@ def generate_flux_png():
         "De la source de log jusqu'a l'alerte et au playbook",
     )
     stages = [
-        ("Sources", "Postes, serveurs, firewall, application, messagerie"),
+        ("Sources", "Postes, serveurs, pfSense FW-S01/FW-S02, application, messagerie"),
         ("Collecte", "Agent Wazuh, syslog, fichier log, API si besoin"),
         ("Wazuh Manager", "Normalisation, correlation, regles"),
         ("Indexer", "Stockage, recherche, historique"),
@@ -469,8 +474,8 @@ def generate_topologie_png():
     )
     node(draw, (650, 250, 500, 210), "Zone SOC centralisee", "Wazuh Manager, Indexer, Dashboard, regles, alertes et playbooks", "#E7F0FF", "#2457D6")
     sites = [
-        ((90, 650, 430, 170), "Site 1", "Centre complet : poste, serveur, firewall, application"),
-        ((685, 650, 430, 170), "Site 2", "Centre secondaire : poste, firewall, messagerie"),
+        ((90, 650, 430, 170), "Site 1", "Centre complet : poste, serveur, pfSense, application"),
+        ((685, 650, 430, 170), "Site 2", "Centre secondaire : poste, pfSense, messagerie"),
         ((1280, 650, 430, 170), "Site 3", "Centre leger : poste et logs applicatifs"),
     ]
     for box, title, body in sites:
@@ -561,8 +566,8 @@ def generate_drawio():
     soc_style = "rounded=1;whiteSpace=wrap;html=1;strokeColor=#2457D6;fillColor=#E7F0FF;fontSize=16;fontStyle=1;"
     edge_style = "endArrow=block;html=1;rounded=0;strokeColor=#2457D6;strokeWidth=2;"
     nodes = {
-        "s1": ("Site 1 - Centre principal<br/>Poste, serveur/AD, application, firewall", 70, 140, 360, 110, box_style),
-        "s2": ("Site 2 - Centre secondaire<br/>Poste, firewall, messagerie", 70, 310, 360, 100, box_style),
+        "s1": ("Site 1 - Centre principal<br/>Poste, serveur/AD, application, pfSense FW-S01", 70, 140, 360, 110, box_style),
+        "s2": ("Site 2 - Centre secondaire<br/>Poste, pfSense FW-S02, messagerie", 70, 310, 360, 100, box_style),
         "s3": ("Site 3 - Centre distant<br/>Poste et logs applicatifs", 70, 470, 360, 90, box_style),
         "wazuh": ("Wazuh Manager / SIEM<br/>Collecte et detection", 660, 190, 300, 100, soc_style),
         "index": ("Wazuh Indexer / OpenSearch<br/>Stockage et recherche", 1040, 190, 300, 100, soc_style),
@@ -572,8 +577,8 @@ def generate_drawio():
     for cell_id, (label, x, y, w, h, style) in nodes.items():
         add_mx_cell(root, cell_id, label, style, vertex="1", geometry={"x": str(x), "y": str(y), "width": str(w), "height": str(h)})
     edges = [
-        ("e1", "s1", "wazuh", "Agents Wazuh / syslog / logs"),
-        ("e2", "s2", "wazuh", "Agents + syslog"),
+        ("e1", "s1", "wazuh", "Agents Wazuh / syslog pfSense / logs"),
+        ("e2", "s2", "wazuh", "Agents + syslog pfSense"),
         ("e3", "s3", "wazuh", "Logs applicatifs"),
         ("e4", "wazuh", "index", "Indexation"),
         ("e5", "index", "dash", "Recherche"),

@@ -10,7 +10,7 @@ sequenceDiagram
     participant Playbook as Playbook
 
     Endpoint->>Wazuh: Evenements systeme et securite via agent
-    Firewall->>Wazuh: Flux reseau et alertes via syslog
+    Firewall->>Wazuh: Flux reseau pfSense via syslog
     App->>Wazuh: Logs applicatifs CRM/RDV/dossiers patients
     Wazuh->>Rules: Normalisation et correlation
     Rules->>Wazuh: Alerte si seuil ou pattern detecte
@@ -18,4 +18,3 @@ sequenceDiagram
     Analyst->>Dash: Analyse de l'alerte
     Analyst->>Playbook: Application de la procedure
     Playbook-->>Analyst: Actions de confinement, qualification, escalade
-

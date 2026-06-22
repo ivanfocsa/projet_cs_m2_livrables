@@ -5,10 +5,10 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="s1" value="Site 1 - Centre principal&lt;br/&gt;Poste, serveur/AD, application, firewall" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#8FA3BF;fillColor=#FFFFFF;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="s1" value="Site 1 - Centre principal&lt;br/&gt;Poste, serveur/AD, application, pfSense FW-S01" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#8FA3BF;fillColor=#FFFFFF;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="70" y="140" width="360" height="110" as="geometry" />
         </mxCell>
-        <mxCell id="s2" value="Site 2 - Centre secondaire&lt;br/&gt;Poste, firewall, messagerie" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#8FA3BF;fillColor=#FFFFFF;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="s2" value="Site 2 - Centre secondaire&lt;br/&gt;Poste, pfSense FW-S02, messagerie" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#8FA3BF;fillColor=#FFFFFF;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="70" y="310" width="360" height="100" as="geometry" />
         </mxCell>
         <mxCell id="s3" value="Site 3 - Centre distant&lt;br/&gt;Poste et logs applicatifs" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#8FA3BF;fillColor=#FFFFFF;fontSize=16;" vertex="1" parent="1">
@@ -26,10 +26,10 @@
         <mxCell id="play" value="Playbooks et reporting&lt;br/&gt;Qualification, reponse, REX" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#2457D6;fillColor=#E7F0FF;fontSize=16;fontStyle=1;" vertex="1" parent="1">
           <mxGeometry x="660" y="500" width="300" height="100" as="geometry" />
         </mxCell>
-        <mxCell id="e1" value="Agents Wazuh / syslog / logs" style="endArrow=block;html=1;rounded=0;strokeColor=#2457D6;strokeWidth=2;" edge="1" parent="1" source="s1" target="wazuh">
+        <mxCell id="e1" value="Agents Wazuh / syslog pfSense / logs" style="endArrow=block;html=1;rounded=0;strokeColor=#2457D6;strokeWidth=2;" edge="1" parent="1" source="s1" target="wazuh">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="e2" value="Agents + syslog" style="endArrow=block;html=1;rounded=0;strokeColor=#2457D6;strokeWidth=2;" edge="1" parent="1" source="s2" target="wazuh">
+        <mxCell id="e2" value="Agents + syslog pfSense" style="endArrow=block;html=1;rounded=0;strokeColor=#2457D6;strokeWidth=2;" edge="1" parent="1" source="s2" target="wazuh">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="e3" value="Logs applicatifs" style="endArrow=block;html=1;rounded=0;strokeColor=#2457D6;strokeWidth=2;" edge="1" parent="1" source="s3" target="wazuh">

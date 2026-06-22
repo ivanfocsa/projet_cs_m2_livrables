@@ -25,12 +25,12 @@ flowchart TB
         PC1["Poste audioprothesiste"]
         SRV1["Serveur fichiers / AD simule"]
         APP1["Application metier CRM/RDV"]
-        FW1["Firewall / routeur"]
+        FW1["Firewall pfSense CE / FW-S01"]
     end
 
     subgraph SITE2["Site 2 - Centre secondaire"]
         PC2["Poste utilisateur"]
-        FW2["Firewall / routeur"]
+        FW2["Firewall pfSense CE / FW-S02"]
         MAIL2["Messagerie simulee"]
     end
 
@@ -75,7 +75,7 @@ Source Mermaid : [../diagrams/topologie_sites_mvp.mmd](../diagrams/topologie_sit
 | Wazuh Dashboard | Interface web de supervision | Youssef / Kilyan |
 | OpenSearch | Stockage et indexation des evenements | Youssef |
 | Agents Wazuh | Collecte endpoint sur postes et serveurs | Youssef |
-| Syslog | Collecte des firewalls et routeurs | Youssef |
+| Syslog | Collecte des firewalls pfSense CE `FW-S01` et `FW-S02` via logs syslog | Youssef |
 | Logs applicatifs | Simulation CRM/RDV/dossiers patients | Mahamadou |
 | Regles de detection | Detection des scenarios SOC | Kilyan |
 | Playbooks | Procedures de qualification et reponse | Mahamadou |
@@ -89,7 +89,7 @@ Source Mermaid : [../diagrams/flux_collecte_logs.mmd](../diagrams/flux_collecte_
 |---|---|---|
 | Poste utilisateur | Agent Wazuh | Echec de connexion, processus suspect, USB branche. |
 | Serveur interne | Agent Wazuh | Elevation de privilege, acces partage, creation compte. |
-| Firewall | Syslog | Scan de ports, connexion refusee, trafic suspect. |
+| Firewall | pfSense CE cible, logs `FW-S01`/`FW-S02` en syslog simule dans le MVP | Scan de ports, connexion refusee, trafic suspect. |
 | Application metier | Fichier log JSON | Acces dossier patient, erreur authentification, volume anormal. |
 | Messagerie | Log simule | Email suspect, piece jointe bloquee, lien phishing. |
 
@@ -101,7 +101,7 @@ Les ports ci-dessous correspondent au cadrage MVP et aux flux classiques a docum
 |---|---|---|---|---|
 | Collecte agent | Postes / serveurs | Wazuh Manager | TCP/UDP 1514 | Agent enregistre, flux limite au SOC. |
 | Enrolement agent | Postes / serveurs | Wazuh Manager | TCP 1515 | Usage ponctuel, controle des agents autorises. |
-| Syslog firewall | Firewall / routeur | Wazuh Manager | UDP/TCP 514 ou port dedie | Source autorisee, filtrage par IP, horodatage fiable. |
+| Syslog firewall | pfSense CE `FW-S01` / `FW-S02` | Wazuh Manager | UDP/TCP 514 en lab, 5514 ou VPN en production | Source autorisee, filtrage par IP, horodatage fiable. |
 | Dashboard SOC | Analyste / admin | Wazuh Dashboard | HTTPS 443 | Acces restreint, comptes nominatifs, RBAC. |
 | API Wazuh | Dashboard / admin | Wazuh Manager | TCP 55000 | Acces interne ou admin uniquement. |
 | Indexation | Wazuh Manager | Wazuh Indexer | TCP 9200 | Flux interne SOC, non expose aux sites. |
@@ -147,7 +147,7 @@ Pour passer de 3 sites simules a 30 sites reels, le projet doit prevoir :
 | Site | `SITE-XX-NOM` | `SITE-01-PARIS` |
 | Poste | `PC-SXX-ROLE-NN` | `PC-S01-AUDIO-01` |
 | Serveur | `SRV-SXX-FONCTION` | `SRV-S01-FICHIERS` |
-| Firewall | `FW-SXX` | `FW-S02` |
+| Firewall | `FW-SXX-PFSENSE` | `FW-S02-PFSENSE` |
 | Application | `APP-SXX-NOM` | `APP-S01-CRM` |
 | Regle | `SOC-AUDIO-USECASE` | `SOC-AUDIO-BRUTEFORCE` |
 

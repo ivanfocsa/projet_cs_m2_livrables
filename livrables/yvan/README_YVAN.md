@@ -38,6 +38,7 @@ Les fichiers Markdown importants ont ete convertis en PDF dans `pdf/`.
 | `pdf/Yvan_FOCSA_Cadrage_Architecture_Organisation.pdf` | Document principal architecture, besoin client et industrialisation. |
 | `pdf/Yvan_FOCSA_Rendu_Individuel_Source.pdf` | Version PDF du rendu individuel source. |
 | `pdf/06_Script_Video_Yvan_Final.pdf` | Script final pour enregistrer ton passage video. |
+| `pdf/07_Stack_Technique_Concrete_Yvan.pdf` | Reponses concretes : pfSense, agents, serveurs, logs, ports. |
 | `pdf/Matrice_Conformite_Cahier_Charges.pdf` | Correspondance entre cahier des charges et preuves. |
 | `pdf/Checklist_Onboarding_Client.pdf` | Support industrialisation vers les sites clients. |
 

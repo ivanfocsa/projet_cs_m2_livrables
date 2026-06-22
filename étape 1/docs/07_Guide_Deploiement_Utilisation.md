@@ -11,7 +11,7 @@ Ce guide decrit les etapes pour deployer le demonstrateur SOC, connecter les pre
 | Machine SOC | VM Linux recommandee, ressources suffisantes pour Wazuh. |
 | Reseau | Connectivite entre sites simules et SOC. |
 | Postes clients | Windows ou Linux avec agent Wazuh. |
-| Logs reseau | Firewall reel, pfSense ou logs syslog simules. |
+| Logs reseau | pfSense CE cible (`FW-S01`/`FW-S02`) ou logs syslog simules. |
 | Logs applicatifs | Fichiers generes par `scripts/generate_demo_logs.py`. |
 | Navigateur | Acces au dashboard Wazuh. |
 
@@ -53,10 +53,13 @@ Actions :
 
 Actions :
 
-1. Activer la sortie syslog du firewall ou utiliser des logs simules.
-2. Envoyer les logs vers le SOC.
-3. Verifier la reception.
-4. Creer un filtre dashboard pour les evenements reseau.
+1. Sur pfSense CE, ouvrir `Status > System Logs > Settings`.
+2. Activer `Remote Logging`.
+3. Renseigner l'adresse du Wazuh Manager comme serveur syslog distant.
+4. Envoyer les categories firewall/filterlog vers le SOC.
+5. En lab, utiliser aussi `logs/generated/firewall_syslog.log` pour rejouer des evenements `FW-S01` et `FW-S02`.
+6. Verifier la reception dans Wazuh.
+7. Creer un filtre dashboard pour les evenements reseau.
 
 ### Etape 4 - Collecter les logs applicatifs
 

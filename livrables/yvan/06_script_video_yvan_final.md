@@ -28,7 +28,7 @@ Le client represente un reseau d'audioprothesistes compose d'environ 30 points d
 
 Pour le MVP, nous ne reproduisons pas directement les 30 sites. Nous utilisons trois sites simules qui representent les principales briques du systeme d'information : postes, firewall, applications metier, serveurs internes et messagerie. Ce choix permet de prouver la chaine SOC tout en gardant une demonstration stable.
 
-L'architecture repose sur un SOC externalise centralise autour de Wazuh. Les postes et serveurs remontent leurs evenements via agents Wazuh, les firewalls via syslog, et les applications metier via des logs applicatifs. Ces evenements sont centralises, analyses par des regles de detection, puis affiches dans des dashboards pour les profils supervision, analyste et administration.
+L'architecture repose sur un SOC externalise centralise autour de Wazuh. Les postes et serveurs remontent leurs evenements via agents Wazuh, les firewalls pfSense CE via syslog, et les applications metier via des logs applicatifs. Dans le MVP, pfSense est represente par `FW-S01` et `FW-S02` avec des logs syslog simules. Ces evenements sont centralises, analyses par des regles de detection, puis affiches dans des dashboards pour les profils supervision, analyste et administration.
 
 La valeur de cette architecture est qu'elle relie les besoins du cahier des charges a une chaine technique concrete : collecte, detection, alerte, investigation, playbook et reporting. Elle permet aussi d'avoir une interface web lisible pour suivre les alertes et prioriser les incidents.
 
@@ -44,4 +44,3 @@ Les limites sont assumees. Certains logs sont simules, le MVP ne correspond pas 
 - Ne pas dire que Docker est la production finale.
 - Ne pas rentrer dans le detail des regles Wazuh ligne par ligne.
 - Ne pas promettre un SOC 24/7 complet.
-

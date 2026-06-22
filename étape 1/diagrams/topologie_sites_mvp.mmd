@@ -10,14 +10,14 @@ flowchart LR
     end
 
     subgraph S1["Site 1 - Centre principal"]
-        S1FW["FW-S1<br/>Firewall / routeur"]:::vm
+        S1FW["FW-S01<br/>pfSense CE"]:::vm
         S1PC["PC-S1<br/>Poste audioprothesiste"]:::vm
         S1SRV["SRV-S1<br/>Serveur fichiers / AD simule"]:::vm
         S1APP["APP-S1<br/>CRM/RDV/dossiers patients simules"]:::vm
     end
 
     subgraph S2["Site 2 - Centre secondaire"]
-        S2FW["FW-S2<br/>Firewall / routeur"]:::vm
+        S2FW["FW-S02<br/>pfSense CE"]:::vm
         S2PC["PC-S2<br/>Poste utilisateur"]:::vm
         S2MAIL["MAIL-S2<br/>Messagerie simulee"]:::vm
     end
@@ -48,4 +48,3 @@ flowchart LR
     S2FW -->|"Syslog"| SOCVM
     S3PC -->|"Agent"| SOCVM
     S3APP -->|"Logs applicatifs"| SOCVM
-

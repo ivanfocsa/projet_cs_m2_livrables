@@ -17,12 +17,12 @@ flowchart TB
         PC1["Poste audioprothesiste"]:::site
         SRV1["Serveur fichiers / AD simule"]:::site
         APP1["Application metier CRM/RDV"]:::site
-        FW1["Firewall / routeur"]:::site
+        FW1["pfSense CE / FW-S01"]:::site
     end
 
     subgraph SITE2["Site 2 - Centre secondaire"]
         PC2["Poste utilisateur"]:::site
-        FW2["Firewall / routeur"]:::site
+        FW2["pfSense CE / FW-S02"]:::site
         MAIL2["Messagerie simulee"]:::site
     end
 
@@ -54,4 +54,3 @@ flowchart TB
     ANALYST --> PLAYBOOKS
     ADMIN --> DASH
     CLIENT --> ALERTS
-
