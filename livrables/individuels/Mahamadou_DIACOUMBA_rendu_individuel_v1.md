@@ -31,7 +31,7 @@ Le SOC ne doit pas seulement collecter des logs. Il doit permettre a un analyste
 
 J'ai commence par identifier les menaces les plus pertinentes pour un reseau d'audioprothesistes : phishing, execution suspecte, brute force, acces anormal aux dossiers patients, elevation de privileges et usage USB. Ces scenarios couvrent a la fois les postes utilisateurs, les acces reseau, les applications metier, les donnees sensibles et les comptes privilegies.
 
-J'ai ensuite travaille sur la logique de detection. Les regles Wazuh du sprint 01 permettent de declencher cinq alertes : execution PowerShell suspecte, brute force sur acces distant, acces anormal aux dossiers patients, modification d'un groupe privilegie et usage USB. Ces alertes sont documentees dans les preuves techniques du projet.
+J'ai ensuite travaille sur la logique de detection. Les regles Wazuh du sprint 01 permettent de documenter sept alertes : execution PowerShell suspecte, brute force sur acces distant, acces anormal aux dossiers patients, modification d'un groupe privilegie, usage USB, phishing et scan reseau. Ces alertes sont documentees dans les preuves techniques du projet.
 
 Enfin, j'ai formalise les playbooks de reponse. Chaque playbook precise les etapes de qualification, les controles a realiser, les actions possibles et les preuves a conserver. Cette partie est importante car elle montre la posture professionnelle du SOC.
 
@@ -108,5 +108,4 @@ Enfin, j'ajouterais une phase d'amelioration continue apres chaque incident simu
 
 Ma contribution porte principalement sur la detection et la reponse incident. J'ai travaille sur les scenarios, les alertes, les playbooks et les REX. Cette partie permet de montrer que le SOC ne se contente pas de stocker des logs : il produit des informations exploitables et guide la reaction.
 
-La suite de mon travail consistera a renforcer les regles, produire les captures Wazuh, finaliser les REX et preparer la demonstration de l'analyse SOC pour la video MVP.
-
+La suite logique consisterait a renforcer les regles, remplacer les captures de demonstrateur par des captures Wazuh live si possible, enrichir les REX et preparer la demonstration de l'analyse SOC pour la video MVP.

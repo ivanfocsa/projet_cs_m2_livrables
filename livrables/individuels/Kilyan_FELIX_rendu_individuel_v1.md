@@ -108,5 +108,4 @@ Enfin, je travaillerais plus tot la mise en forme finale du rapport pour eviter 
 
 Ma contribution porte principalement sur le pilotage, la coherence et la transformation du cahier des charges en livrables concrets. Le projet m'a permis de comprendre qu'une solution SOC doit etre aussi bien documentee qu'elle est techniquement fonctionnelle.
 
-La suite de mon travail consistera a finaliser la matrice de conformite, integrer les captures dans le rapport final, consolider la partie couts et preparer une introduction claire pour la video MVP.
-
+La suite logique consisterait a maintenir la matrice de conformite, verifier que les captures restent alignees avec le rapport final, consolider la partie couts et preparer une introduction claire pour la video MVP.

@@ -1,0 +1,7 @@
+# Inventaire des logs Daylight
+
+- `étape 1/logs/generated/endpoint_events.jsonl` : 200 lignes, sha256 `32c918b91d9df670`
+- `étape 1/logs/generated/application_events.jsonl` : 200 lignes, sha256 `ae4659b59ba54c2e`
+- `étape 1/logs/generated/mail_events.jsonl` : 200 lignes, sha256 `619a99e3f608ddc8`
+- `étape 1/logs/generated/ad_events.jsonl` : 200 lignes, sha256 `0c218c18292e2ead`
+- `étape 1/logs/generated/firewall_syslog.log` : 200 lignes, sha256 `eed0b1430b7fac77`

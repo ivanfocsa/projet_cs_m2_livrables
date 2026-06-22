@@ -8,7 +8,7 @@ const reports = [
   {
     source: path.join(root, "livrables", "rapport-final", "rapport-technique-final-50p-v1.md"),
     output: path.join(root, "livrables", "rapport-final", "Rapport_Technique_Final_50p_V1_SANS_PAGES_BLANCHES.pdf"),
-    title: "Rapport technique final - V1 longue",
+    title: "Rapport technique final - version consolidee",
     subtitle: "SOC externalise pour un reseau d'audioprothesistes",
   },
   {

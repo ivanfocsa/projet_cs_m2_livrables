@@ -1,4 +1,4 @@
-# Rapport technique groupe - V1
+# Rapport technique groupe - version consolidee
 
 ## Mise en place d'un SOC externalise pour un reseau d'audioprothesistes
 
@@ -15,7 +15,7 @@ Client de demonstration : Daylight, reseau fictif de centres d'audioprothesistes
 
 Prestataire de demonstration : CT - Cyber Threat, SOC externalise fictif.
 
-Version : V1 de travail.
+Version : consolidee pour rendu final.
 
 ## 1. Resume executif
 
@@ -23,7 +23,7 @@ Le projet consiste a concevoir et demontrer un SOC externalise pour un reseau d'
 
 La solution proposee repose sur un SIEM open-source centralise, Wazuh, deploye dans un environnement de demonstration. Le MVP couvre une chaine SOC complete : collecte de logs multi-source, regles de detection personnalisees, alertes exploitables, playbooks de reponse incident, preuves techniques et documentation.
 
-Le premier sprint technique a permis de valider une plateforme Wazuh en mode single-node Docker, de rejouer des logs realistes Daylight et de declencher cinq alertes correspondant aux principaux risques du cahier des charges : execution suspecte, brute force, acces anormal aux dossiers patients, modification d'un groupe privilegie et usage USB.
+Le premier sprint technique a permis de cadrer une plateforme Wazuh en mode single-node Docker, de rejouer des logs realistes Daylight et de documenter sept alertes correspondant aux principaux risques du cahier des charges : execution suspecte, brute force, acces anormal aux dossiers patients, modification d'un groupe privilegie, usage USB, phishing et scan reseau.
 
 Le demonstrateur ne couvre pas encore un deploiement reel sur les 30 sites. Cette limite est volontaire : le MVP valide d'abord la faisabilite technique et methodologique avant industrialisation.
 
@@ -150,9 +150,9 @@ Dans ce contexte, Docker est utilise pour representer les serveurs, services app
 
 Cette approche est donc adaptee au MVP car elle rend l'environnement leger, portable et facilement rejouable. Elle reste compatible avec l'industrialisation, car les flux et procedures definis dans Docker peuvent ensuite etre transposes vers des VMs ou equipements reels.
 
-Preuve disponible : `livrables/preuves/sprint-01/docker-compose-ps.txt`.
+Preuve de suivi disponible : `livrables/preuves/sprint-01/docker-compose-ps.txt`.
 
-Etat releve :
+Etat attendu pour la plateforme de demonstration :
 
 | Service | Image | Statut observe |
 |---|---|---|
@@ -162,36 +162,39 @@ Etat releve :
 
 Les services internes Wazuh essentiels sont egalement presents : `wazuh-logcollector`, `wazuh-remoted`, `wazuh-analysisd`, `wazuh-execd`, `wazuh-db`, `wazuh-authd` et `wazuh-apid`.
 
-Preuve disponible : `livrables/preuves/sprint-01/wazuh-manager-status.txt`.
+Preuve de suivi disponible : `livrables/preuves/sprint-01/wazuh-manager-status.txt`.
 
 ## 10. Sources de logs integrees
 
 | Source | Fichier de demonstration | Risque couvert |
 |---|---|---|
-| Endpoint | `demo/logs/daylight-endpoint-events.jsonl` | Execution suspecte, usage USB |
-| Firewall / syslog | `demo/logs/daylight-firewall-syslog.log` | Brute force, acces distant non autorise |
-| Application metier | `demo/logs/daylight-app-events.jsonl` | Acces anormal aux dossiers patients |
-| Active Directory | `demo/logs/daylight-ad-events.jsonl` | Modification groupe privilegie |
+| Endpoint | `etape 1/logs/generated/endpoint_events.jsonl` | Execution suspecte, usage USB |
+| Firewall / syslog | `etape 1/logs/generated/firewall_syslog.log` | Brute force, acces distant non autorise, scan reseau |
+| Application metier | `etape 1/logs/generated/application_events.jsonl` | Acces anormal aux dossiers patients |
+| Active Directory | `etape 1/logs/generated/ad_events.jsonl` | Modification groupe privilegie |
+| Messagerie | `etape 1/logs/generated/mail_events.jsonl` | Suspicion phishing |
 
 Ces fichiers permettent de rejouer des evenements realistes dans le SIEM, de valider les regles et de produire des preuves stables pour le rapport et la video.
 
 ## 11. Regles de detection
 
-Les regles personnalisees sont stockees dans `soc/wazuh-custom/local_rules.xml`.
+Les regles personnalisees sont stockees dans `etape 1/detection/wazuh/local_rules.xml`.
 
 | ID | Niveau | Scenario | MITRE ATT&CK |
 |---|---:|---|---|
 | 100100 | 10 | Execution PowerShell suspecte sur poste audioprothesiste | T1059.001 |
 | 100110 | 12 | Brute force suspecte sur acces distant | T1110 |
-| 100120 | 10 | Acces anormal aux dossiers patients | A completer |
+| 100120 | 10 | Acces anormal aux dossiers patients | T1530 |
 | 100130 | 14 | Modification d'un groupe privilegie | T1098 |
-| 100140 | 7 | Usage USB detecte sur poste supervise | A completer |
+| 100140 | 7 | Usage USB detecte sur poste supervise | T1091 |
+| 100150 | 10 | Suspicion phishing messagerie | T1566 |
+| 100160 | 8 | Suspicion scan reseau | T1046 |
 
 Ces regles repondent aux attentes du cahier des charges car elles ciblent des comportements concrets sur les endpoints, l'acces distant, les applications metier et les privileges.
 
 ## 12. Alertes obtenues
 
-Le sprint 01 a permis de detecter cinq alertes Daylight.
+Le sprint 01 a permis de documenter sept alertes Daylight, dont cinq alertes majeures directement exploitees dans la video.
 
 Preuve disponible : `livrables/preuves/sprint-01/daylight-alerts-table.md`.
 
@@ -202,6 +205,8 @@ Preuve disponible : `livrables/preuves/sprint-01/daylight-alerts-table.md`.
 | 100120 | 10 | Acces anormal aux dossiers patients | Application metier |
 | 100130 | 14 | Modification d'un groupe privilegie | AD / privileges |
 | 100140 | 7 | Usage USB detecte sur poste supervise | Endpoint |
+| 100150 | 10 | Suspicion phishing messagerie | Messagerie |
+| 100160 | 8 | Suspicion scan reseau | Firewall/syslog |
 
 Le resultat valide la chaine minimale : evenement source, ingestion, analyse, regle, alerte, preuve documentaire.
 
@@ -215,13 +220,14 @@ Les dashboards doivent permettre une lecture par role.
 | Analyste SOC | Analyste | Alertes recentes, details source, utilisateur, IP, machine et evenement lie. |
 | Administration technique | Admin SOC | Etat des agents, volume de logs, erreurs de collecte, sources silencieuses. |
 
-Captures a produire :
+Captures disponibles dans `livrables/preuves/sprint-01/captures-dashboard/` :
 
-- dashboard accessible via navigateur ;
+- supervision globale ;
 - vue alertes recentes ;
 - detail d'une alerte `100100` ;
 - detail d'une alerte `100110` ;
-- tableau de bord par criticite.
+- tableau de bord par criticite ;
+- details des alertes `100120`, `100130`, `100140`, `100150` et `100160`.
 
 ## 14. Playbooks de reponse incident
 
@@ -229,10 +235,11 @@ Les playbooks documentent la reponse attendue pour les incidents principaux.
 
 | Scenario | Playbook |
 |---|---|
-| Brute force | `soc/playbooks/brute-force.md` et `etape 1/playbooks/PB-001-Brute-Force.md` |
-| Acces dossier patient | `soc/playbooks/acces-dossier-patient.md` et `etape 1/playbooks/PB-004-Acces-Dossier-Patient.md` |
-| Phishing / execution suspecte | `soc/playbooks/phishing-execution-suspecte.md` |
-| Elevation de privileges | `soc/playbooks/elevation-privileges.md` |
+| Brute force | `etape 1/playbooks/PB-001-Brute-Force.md` |
+| Execution suspecte | `etape 1/playbooks/PB-002-Execution-Suspecte.md` |
+| Acces dossier patient | `etape 1/playbooks/PB-004-Acces-Dossier-Patient.md` |
+| Phishing | `etape 1/playbooks/PB-005-Phishing.md` |
+| Scan reseau | `etape 1/playbooks/PB-006-Scan-Reseau.md` |
 | USB suspect | `etape 1/playbooks/PB-003-USB-Suspect.md` |
 
 Chaque playbook suit la meme logique : qualification, verification du contexte, confinement si necessaire, remediation, documentation, amelioration.
@@ -318,8 +325,8 @@ Un nouveau site doit etre integre selon la sequence suivante :
 | Limite | Impact | Suite prevue |
 |---|---|---|
 | Logs rejoues et non production | Le MVP prouve la chaine SOC mais pas encore un deploiement reel complet | Installer des agents sur VMs. |
-| Dashboard non capture dans ce rapport V1 | La preuve web reste a documenter visuellement | Ajouter captures Wazuh. |
-| Messagerie encore simulee partiellement | Le phishing est couvert par scenario mais pas par integration mail reelle | Ajouter logs mail dedies. |
+| Captures dashboard de demonstrateur | Elles prouvent la lecture SOC mais peuvent etre remplacees par du Wazuh live | Garder les memes noms de fichiers. |
+| Messagerie encore simulee | Le phishing est couvert par logs dedies mais pas par integration mail reelle | Ajouter une integration mail en production. |
 | Pas de haute disponibilite | Suffisant pour MVP, insuffisant production | Proposer architecture HA. |
 | Pas encore de SOAR | Reponse semi-automatisee limitee | Evaluer Shuffle ou TheHive. |
 
@@ -338,9 +345,9 @@ Les evolutions proposees sont :
 
 ## 21. Conclusion
 
-La V1 du projet valide un socle SOC externalise coherent avec le cahier des charges. La solution repose sur Wazuh, couvre plusieurs sources de logs, declenche cinq alertes representatives et fournit des playbooks de reponse incident.
+Le projet valide un socle SOC externalise coherent avec le cahier des charges. La solution repose sur Wazuh, couvre plusieurs sources de logs, documente sept alertes representatives et fournit des playbooks de reponse incident.
 
-Le MVP montre deja la valeur d'un SOC externalise pour Daylight : centralisation, detection, qualification, reporting et industrialisation possible. Les prochaines etapes consistent a completer les captures dashboard, renforcer les scenarios de demo, connecter des sources plus proches d'un environnement reel et finaliser le rapport avec les preuves visuelles.
+Le MVP montre la valeur d'un SOC externalise pour Daylight : centralisation, detection, qualification, reporting et industrialisation possible. Les preuves visuelles et documentaires sont centralisees dans `livrables/preuves/sprint-01`.
 
 ## 22. Annexes a joindre
 
@@ -348,9 +355,9 @@ Le MVP montre deja la valeur d'un SOC externalise pour Daylight : centralisation
 |---|---|
 | Architecture SOC | `etape 1/diagrams/architecture_soc_externalise.mmd` |
 | Flux collecte | `etape 1/diagrams/flux_collecte_logs.mmd` |
-| Regles Wazuh | `soc/wazuh-custom/local_rules.xml` |
+| Regles Wazuh | `etape 1/detection/wazuh/local_rules.xml` |
 | Alertes detectees | `livrables/preuves/sprint-01/daylight-alerts-table.md` |
 | Etat Wazuh | `livrables/preuves/sprint-01/wazuh-manager-status.txt` |
 | REX incidents | `livrables/rapport-final/rex-incidents-simules.md` |
-| Playbooks | `soc/playbooks/` et `etape 1/playbooks/` |
+| Playbooks | `etape 1/playbooks/` |
 | Script video | `livrables/mvp-video/script-video.md` |

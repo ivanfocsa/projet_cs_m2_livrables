@@ -50,7 +50,7 @@ La premiere limite est la complexite de Wazuh. La plateforme est puissante, mais
 
 La deuxieme limite vient de l'environnement Docker. Il est tres pratique pour un demonstrateur, mais il ne represente pas completement un parc client compose de postes Windows, serveurs internes, firewalls et applications de production.
 
-La troisieme limite concerne les captures. Meme si les alertes sont detectees, il faut produire des captures dashboard claires pour le rapport et la video. La preuve technique brute ne suffit pas ; elle doit etre lisible pour le jury.
+La troisieme limite concerne les captures. Les captures dashboard du demonstrateur ont ete consolidees pour le rapport et la video, mais elles devront idealement etre remplacees par des captures Wazuh live si l'environnement technique est disponible le jour de la soutenance.
 
 ## 6. Analyse critique personnelle
 
@@ -107,4 +107,4 @@ Enfin, je mettrais en place une checklist de controle apres chaque modification 
 
 Ma contribution est centree sur le socle SIEM. J'ai travaille sur la mise en place de Wazuh, l'integration des logs et la validation des alertes. Cette partie est essentielle car elle rend le projet demonstrable.
 
-La suite de mon travail consistera a produire les captures dashboard, renforcer les dashboards par role, documenter l'installation et preparer une presentation claire de la plateforme pour la video MVP.
+La suite logique consisterait a remplacer les captures de demonstrateur par des captures Wazuh live, renforcer les dashboards par role, documenter l'installation et preparer une presentation claire de la plateforme pour la video MVP.

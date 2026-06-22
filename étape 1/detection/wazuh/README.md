@@ -18,10 +18,10 @@ Approche recommandee :
 
 | Regle | Scenario |
 |---|---|
-| `100100` | Brute force |
-| `100110` | Execution suspecte |
-| `100120` | Usage USB suspect |
-| `100130` | Acces anormal dossier patient |
-| `100140` | Phishing |
-| `100150` | Scan reseau |
-
+| `100100` | Execution PowerShell suspecte |
+| `100110` | Brute force acces distant |
+| `100120` | Acces anormal dossier patient |
+| `100130` | Modification groupe privilegie |
+| `100140` | Usage USB suspect |
+| `100150` | Phishing |
+| `100160` | Scan reseau |

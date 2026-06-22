@@ -45,6 +45,10 @@ FIREWALL_HOSTS_BY_SITE = {
     "SITE-02": ["FW-S02"],
 }
 
+AD_HOSTS_BY_SITE = {
+    "SITE-01": ["AD-S01"],
+}
+
 
 def iso(dt: datetime) -> str:
     return dt.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
@@ -129,11 +133,34 @@ def mail_event(now: datetime, index: int, scenario: str) -> dict:
     return evt
 
 
+def ad_event(now: datetime, index: int, scenario: str) -> dict:
+    evt = event_base(now, index, scenario, AD_HOSTS_BY_SITE)
+    evt["source"] = "active_directory"
+    if scenario == "privileged_group_change":
+        evt.update(
+            action="group_membership_changed",
+            target_group=random.choice(["Domain Admins", "Administrateurs", "SOC-Admins"]),
+            added_user=random.choice(USERS),
+            actor=random.choice(["admin.demo", "svc-maintenance", "y.focsa"]),
+            severity="critical",
+            message="Privileged group membership modified",
+        )
+    else:
+        evt.update(action="user_logon", severity="info", message="Normal directory authentication")
+    return evt
+
+
 def firewall_line(now: datetime, index: int, scenario: str) -> str:
     dt = now + timedelta(seconds=index * random.randint(2, 18))
     site = random.choice(list(FIREWALL_HOSTS_BY_SITE.keys()))
     host = random.choice(FIREWALL_HOSTS_BY_SITE[site])
     site_net = int(site[-2:])
+    if scenario == "brute_force":
+        src = f"198.51.100.{random.randint(10,240)}"
+        dst = f"10.10.{site_net}.{random.randint(10,60)}"
+        user = random.choice(USERS)
+        attempts = random.randint(6, 14)
+        return f"{dt:%b %d %H:%M:%S} {host} firewall action=deny scenario=brute_force src={src} dst={dst} port=3389 user={user} attempts={attempts} message=\"Repeated remote access failures\""
     if scenario == "port_scan":
         src = f"198.51.100.{random.randint(10,240)}"
         dst = f"10.10.{site_net}.{random.randint(10,60)}"
@@ -154,7 +181,10 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", default="logs/generated", help="Output directory")
     parser.add_argument("--count", type=int, default=200, help="Number of events per JSONL family")
+    parser.add_argument("--seed", type=int, default=42, help="Random seed for reproducible demo logs")
     args = parser.parse_args()
+
+    random.seed(args.seed)
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
@@ -165,11 +195,13 @@ def main() -> None:
     endpoint_rows = [endpoint_event(now, i, random.choice(endpoint_scenarios)) for i in range(args.count)]
     app_rows = [app_event(now, i, random.choice(["normal"] * 10 + ["patient_access_anomaly"])) for i in range(args.count)]
     mail_rows = [mail_event(now, i, random.choice(["normal"] * 10 + ["phishing"])) for i in range(args.count)]
-    firewall_rows = [firewall_line(now, i, random.choice(["normal"] * 8 + ["port_scan"])) for i in range(args.count)]
+    ad_rows = [ad_event(now, i, random.choice(["normal"] * 12 + ["privileged_group_change"])) for i in range(args.count)]
+    firewall_rows = [firewall_line(now, i, random.choice(["normal"] * 8 + ["brute_force", "port_scan"])) for i in range(args.count)]
 
     write_jsonl(out / "endpoint_events.jsonl", endpoint_rows)
     write_jsonl(out / "application_events.jsonl", app_rows)
     write_jsonl(out / "mail_events.jsonl", mail_rows)
+    write_jsonl(out / "ad_events.jsonl", ad_rows)
     (out / "firewall_syslog.log").write_text("\n".join(firewall_rows) + "\n", encoding="utf-8")
 
     print(f"Generated demo logs in {out.resolve()}")

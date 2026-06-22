@@ -1,0 +1,4 @@
+Etat Wazuh - preuve a valider sur l'environnement de demonstration live
+Generation dossier preuves : 2026-06-22T14:24:12+00:00
+Note : Docker n'est pas disponible dans l'environnement local Codex utilise pour preparer ce rendu.
+Action soutenance : remplacer ce fichier par la sortie `docker compose ps` et `docker exec wazuh-manager /var/ossec/bin/wazuh-control status` si la plateforme live est accessible.

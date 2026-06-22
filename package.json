@@ -1,0 +1,14 @@
+{
+  "name": "projet-cs-m2-livrables",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate:logs": "python3 \"étape 1/scripts/generate_demo_logs.py\" --out \"étape 1/logs/generated\" --count 200 --seed 42",
+    "prepare:preuves": "python3 scripts/prepare-final-deliverables.py",
+    "generate:pdf": "node scripts/generate-rapports-v1.mjs"
+  },
+  "dependencies": {
+    "pdfkit": "^0.15.2"
+  }
+}

@@ -1,0 +1,50 @@
+project: soc-audiopro
+soc:
+  name: SOC-EXTERNALISE-01
+  siem: wazuh
+  environment: mvp
+sites:
+  - id: SITE-01
+    name: Centre principal
+    city: Paris
+    assets:
+      - hostname: PC-S01-AUDIO-01
+        type: endpoint
+        os: windows
+        collection: wazuh-agent
+      - hostname: SRV-S01-FICHIERS
+        type: server
+        os: windows-or-linux
+        collection: wazuh-agent
+      - hostname: APP-S01-CRM
+        type: application
+        collection: file-log
+      - hostname: FW-S01
+        type: firewall
+        collection: syslog
+  - id: SITE-02
+    name: Centre secondaire
+    city: Lyon
+    assets:
+      - hostname: PC-S02-AUDIO-01
+        type: endpoint
+        os: windows
+        collection: wazuh-agent
+      - hostname: FW-S02
+        type: firewall
+        collection: syslog
+      - hostname: MAIL-S02
+        type: mail
+        collection: file-log
+  - id: SITE-03
+    name: Centre distant
+    city: Lille
+    assets:
+      - hostname: PC-S03-AUDIO-01
+        type: endpoint
+        os: linux
+        collection: wazuh-agent
+      - hostname: APP-S03-LOGS
+        type: application
+        collection: file-log
+

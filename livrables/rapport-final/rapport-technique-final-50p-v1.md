@@ -1,4 +1,4 @@
-# Rapport technique final - V1 longue
+# Rapport technique final - version consolidee
 
 ## Page 1 - Page de garde et synthese
 
@@ -12,7 +12,7 @@ Prestataire de demonstration : CT - Cyber Threat, SOC externalise fictif.
 
 Ce rapport presente la conception, la mise en place et l'industrialisation d'un SOC externalise. Il couvre le cadrage du besoin, l'architecture cible, le choix de Wazuh, la strategie de collecte, les regles de detection, les dashboards, les playbooks de reponse incident, les tests realises, les couts, les limites et les perspectives.
 
-La version actuelle est une V1 longue. Elle est volontairement structuree comme un rapport final complet afin de servir de base de travail pour la suite du projet. Les captures Wazuh et les preuves visuelles definitives devront etre ajoutees au fur et a mesure de l'avancement technique.
+Cette version consolidee regroupe le rapport, les preuves de logs, les regles de detection, les captures dashboard de demonstrateur et les annexes utiles pour la soutenance. Les captures sont generees a partir des logs Daylight du MVP et peuvent etre remplacees par des captures Wazuh live si la plateforme est accessible au moment de la demonstration.
 
 <!-- pagebreak -->
 
@@ -437,7 +437,7 @@ Une detection utile doit etre comprehensible, testable et associee a un playbook
 
 ## Page 26 - Regles Wazuh
 
-Les regles Wazuh personnalisees sont stockees dans `soc/wazuh-custom/local_rules.xml`. Elles sont la traduction technique des scenarios de detection.
+Les regles Wazuh personnalisees sont stockees dans `etape 1/detection/wazuh/local_rules.xml`. Elles sont la traduction technique des scenarios de detection.
 
 | ID | Niveau | Description |
 |---|---:|---|
@@ -446,6 +446,8 @@ Les regles Wazuh personnalisees sont stockees dans `soc/wazuh-custom/local_rules
 | 100120 | 10 | Acces anormal dossiers patients. |
 | 100130 | 14 | Modification groupe privilegie. |
 | 100140 | 7 | Usage USB detecte. |
+| 100150 | 10 | Suspicion phishing messagerie. |
+| 100160 | 8 | Suspicion scan reseau. |
 
 Les niveaux d'alerte permettent de prioriser. Une modification de groupe privilegie est plus critique qu'un simple usage USB, meme si les deux doivent etre investigues.
 
@@ -703,8 +705,9 @@ Le sprint 01 a produit des preuves techniques importantes.
 | Logs presents | `livrables/preuves/sprint-01/daylight-log-files.txt` |
 | Alertes detectees | `livrables/preuves/sprint-01/daylight-alerts-table.md` |
 | Extrait alertes | `livrables/preuves/sprint-01/alerts-tail.txt` |
+| Captures dashboard | `livrables/preuves/sprint-01/captures-dashboard/` |
 
-La prochaine etape est d'ajouter des captures visuelles du dashboard Wazuh afin de renforcer le dossier final.
+Les captures visuelles du dossier `captures-dashboard/` permettent de montrer la supervision globale, la liste des alertes et le detail des alertes principales `100100` a `100160`.
 
 <!-- pagebreak -->
 
@@ -855,7 +858,7 @@ La securite de la plateforme doit etre documentee dans le guide d'exploitation. 
 Limites actuelles :
 
 - logs simules ou rejoues ;
-- pas encore de captures dashboard completes ;
+- captures dashboard issues du demonstrateur et remplacables par des captures Wazuh live ;
 - pas de deploiement reel sur 30 sites ;
 - pas de haute disponibilite ;
 - messagerie encore partiellement simulee ;
@@ -895,4 +898,4 @@ Annexes a joindre :
 - rendus individuels ;
 - script video.
 
-La prochaine version devra integrer les captures Wazuh, les schemas exportes en image et les preuves finales de la demonstration.
+Les annexes livrees permettent de verifier la coherence entre cahier des charges, logs, regles, alertes, playbooks, rapport et video de demonstration.

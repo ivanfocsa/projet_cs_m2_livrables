@@ -1,0 +1,5 @@
+Lien YouTube non repertorie a remplacer avant depot :
+
+https://www.youtube.com/watch?v=A_REMPLACER
+
+Consigne : heberger la video finale en mode Non repertorie, puis remplacer cette URL avant de deposer le zip.
