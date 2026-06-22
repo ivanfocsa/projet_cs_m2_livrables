@@ -9,6 +9,7 @@
 | 3 | `supports/client_onboarding_checklist.md` | Prouver l'industrialisation vers plusieurs sites. |
 | 4 | `supports/site_inventory.example.yml` | Montrer la logique d'inventaire site/machines. |
 | 5 | `supports/09_Matrice_Conformite_Cahier_Charges.md` | Relier le projet au cahier des charges. |
+| 6 | `../../étape 1/docs/04_Gestion_Couts.md` | Optionnel : citer les couts MVP et production si le jury demande. |
 
 ## Phrase de transition entre les supports
 
@@ -32,9 +33,13 @@
 
 > Cette matrice montre que chaque exigence du cahier des charges a une reponse projet : collecte, SIEM, dashboards, playbooks, reporting et reproductibilite.
 
+### Couts
+
+> Le MVP limite les couts logiciels avec Wazuh open-source. En production, les couts principaux deviennent l'infrastructure, le stockage, l'exploitation SOC, la maintenance et l'onboarding des sites.
+
 ## Supports a eviter pendant ton passage
 
 - Ne rentre pas trop dans les regles Wazuh ligne par ligne : c'est plutot la partie detection.
 - Ne passe pas trop de temps sur les playbooks : c'est plutot la partie reponse incident.
 - Ne promets pas une production 30 sites deja faite : presente-le comme une trajectoire industrialisable.
-
+- Ne fais pas un chiffrage commercial detaille : garde les couts au niveau architecture et production.

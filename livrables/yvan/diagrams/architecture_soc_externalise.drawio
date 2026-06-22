@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" modified="2026-06-22T00:00:00.000Z" agent="Codex" version="24.7.17">
+  <diagram id="architecture-yvan" name="Architecture SOC MVP">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="s1" value="Site 1 - Centre principal&lt;br/&gt;Poste, serveur/AD, application, firewall" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#8FA3BF;fillColor=#FFFFFF;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="70" y="140" width="360" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="s2" value="Site 2 - Centre secondaire&lt;br/&gt;Poste, firewall, messagerie" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#8FA3BF;fillColor=#FFFFFF;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="70" y="310" width="360" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="s3" value="Site 3 - Centre distant&lt;br/&gt;Poste et logs applicatifs" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#8FA3BF;fillColor=#FFFFFF;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="70" y="470" width="360" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="wazuh" value="Wazuh Manager / SIEM&lt;br/&gt;Collecte et detection" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#2457D6;fillColor=#E7F0FF;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="190" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="index" value="Wazuh Indexer / OpenSearch&lt;br/&gt;Stockage et recherche" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#2457D6;fillColor=#E7F0FF;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="190" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="dash" value="Wazuh Dashboard&lt;br/&gt;Supervision / Analyste / Admin" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#2457D6;fillColor=#E7F0FF;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1040" y="360" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="play" value="Playbooks et reporting&lt;br/&gt;Qualification, reponse, REX" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#2457D6;fillColor=#E7F0FF;fontSize=16;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="660" y="500" width="300" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="Agents Wazuh / syslog / logs" style="endArrow=block;html=1;rounded=0;strokeColor=#2457D6;strokeWidth=2;" edge="1" parent="1" source="s1" target="wazuh">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="Agents + syslog" style="endArrow=block;html=1;rounded=0;strokeColor=#2457D6;strokeWidth=2;" edge="1" parent="1" source="s2" target="wazuh">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="Logs applicatifs" style="endArrow=block;html=1;rounded=0;strokeColor=#2457D6;strokeWidth=2;" edge="1" parent="1" source="s3" target="wazuh">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="Indexation" style="endArrow=block;html=1;rounded=0;strokeColor=#2457D6;strokeWidth=2;" edge="1" parent="1" source="wazuh" target="index">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="Recherche" style="endArrow=block;html=1;rounded=0;strokeColor=#2457D6;strokeWidth=2;" edge="1" parent="1" source="index" target="dash">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="Alertes" style="endArrow=block;html=1;rounded=0;strokeColor=#2457D6;strokeWidth=2;" edge="1" parent="1" source="wazuh" target="play">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" value="Investigation" style="endArrow=block;html=1;rounded=0;strokeColor=#2457D6;strokeWidth=2;" edge="1" parent="1" source="dash" target="play">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

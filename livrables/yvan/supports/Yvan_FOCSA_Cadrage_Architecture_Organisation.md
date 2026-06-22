@@ -124,6 +124,20 @@ flowchart TB
     DASH --> REPORT
 ```
 
+### 6.1 Flux techniques principaux
+
+| Flux | Source | Destination | Protocole / port indicatif | Point de securite |
+|---|---|---|---|---|
+| Agent Wazuh | Postes / serveurs | Wazuh Manager | 1514 | Restreindre aux machines declarees. |
+| Enrolement agent | Postes / serveurs | Wazuh Manager | 1515 | Utiliser seulement a l'installation. |
+| Syslog | Firewalls / routeurs | Wazuh Manager | 514 ou port dedie | Filtrer par IP source et segment reseau. |
+| Dashboard | Analystes / admin | Wazuh Dashboard | HTTPS 443 | RBAC, comptes nominatifs, mot de passe fort. |
+| API Wazuh | Dashboard / admin | Wazuh Manager | 55000 | Acces admin ou interne uniquement. |
+| Indexation | Manager | Indexer/OpenSearch | 9200 | Flux interne SOC non expose aux sites. |
+| Logs applicatifs | Application metier | Collecteur / agent | Fichier local ou API | Masquage des donnees sensibles en production. |
+
+Ces flux permettent d'expliquer que le MVP n'est pas seulement un schema logique : il prevoit aussi les chemins techniques que les evenements empruntent entre les sites clients et le SOC.
+
 ## 7. Choix techniques recommandes
 
 | Composant | Choix recommande | Justification |

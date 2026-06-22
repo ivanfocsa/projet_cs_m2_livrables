@@ -93,7 +93,21 @@ Source Mermaid : [../diagrams/flux_collecte_logs.mmd](../diagrams/flux_collecte_
 | Application metier | Fichier log JSON | Acces dossier patient, erreur authentification, volume anormal. |
 | Messagerie | Log simule | Email suspect, piece jointe bloquee, lien phishing. |
 
-## 6. Modele de securisation
+## 6. Flux techniques a defendre
+
+Les ports ci-dessous correspondent au cadrage MVP et aux flux classiques a documenter. En production, ils devraient etre limites par pare-feu, VPN, filtrage inter-zones et journalisation des acces d'administration.
+
+| Flux | Source | Destination | Protocole / port indicatif | Securisation attendue |
+|---|---|---|---|---|
+| Collecte agent | Postes / serveurs | Wazuh Manager | TCP/UDP 1514 | Agent enregistre, flux limite au SOC. |
+| Enrolement agent | Postes / serveurs | Wazuh Manager | TCP 1515 | Usage ponctuel, controle des agents autorises. |
+| Syslog firewall | Firewall / routeur | Wazuh Manager | UDP/TCP 514 ou port dedie | Source autorisee, filtrage par IP, horodatage fiable. |
+| Dashboard SOC | Analyste / admin | Wazuh Dashboard | HTTPS 443 | Acces restreint, comptes nominatifs, RBAC. |
+| API Wazuh | Dashboard / admin | Wazuh Manager | TCP 55000 | Acces interne ou admin uniquement. |
+| Indexation | Wazuh Manager | Wazuh Indexer | TCP 9200 | Flux interne SOC, non expose aux sites. |
+| Logs applicatifs | Application metier | Agent ou collecteur Wazuh | Fichier local / volume / API | Donnees fictives en MVP, masquage en production. |
+
+## 7. Modele de securisation
 
 | Risque | Mesure prevue |
 |---|---|
@@ -104,7 +118,7 @@ Source Mermaid : [../diagrams/flux_collecte_logs.mmd](../diagrams/flux_collecte_
 | Faux positifs | Qualification SOC et amelioration continue des regles. |
 | Indisponibilite SOC | Procedure de redemarrage et verification services. |
 
-## 7. Roles d'acces
+## 8. Roles d'acces
 
 | Role | Droits attendus | Usage |
 |---|---|---|
@@ -113,7 +127,7 @@ Source Mermaid : [../diagrams/flux_collecte_logs.mmd](../diagrams/flux_collecte_
 | Administrateur | Configuration agents, regles, integrations | Maintien de la plateforme. |
 | Client / Direction | Reporting synthetique | Lecture des indicateurs et incidents majeurs. |
 
-## 8. Extension vers 30 sites
+## 9. Extension vers 30 sites
 
 Pour passer de 3 sites simules a 30 sites reels, le projet doit prevoir :
 
@@ -126,7 +140,7 @@ Pour passer de 3 sites simules a 30 sites reels, le projet doit prevoir :
 - une procedure de validation de collecte ;
 - un reporting mensuel par site et global.
 
-## 9. Convention de nommage
+## 10. Convention de nommage
 
 | Objet | Convention | Exemple |
 |---|---|---|
@@ -137,7 +151,7 @@ Pour passer de 3 sites simules a 30 sites reels, le projet doit prevoir :
 | Application | `APP-SXX-NOM` | `APP-S01-CRM` |
 | Regle | `SOC-AUDIO-USECASE` | `SOC-AUDIO-BRUTEFORCE` |
 
-## 10. Preuves a capturer
+## 11. Preuves a capturer
 
 | Preuve | Moment |
 |---|---|
@@ -149,4 +163,3 @@ Pour passer de 3 sites simules a 30 sites reels, le projet doit prevoir :
 | Alerte phishing | Scenario detection 5. |
 | Playbook execute | Reponse incident. |
 | Dashboard par site | Demonstration finale. |
-
